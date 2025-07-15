@@ -16,62 +16,24 @@ warna_golongan = {
 }
 
 def tampilkan_tabel_periodik():
-    st.markdown("""
-    <style>
-        .unsur-box {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            line-height: 50px;
-            margin: 1px;
-            text-align: center;
-            font-weight: bold;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+    if "selected_elements" not in st.session_state:
+        st.session_state.selected_elements = []
 
     for baris in elemen_periodik:
-        kolom_html = ""
-        for elemen in baris:
+        kolom = st.columns(len(baris))
+        for i, elemen in enumerate(baris):
             if "simbol" in elemen and elemen["simbol"]:
-                warna = warna_golongan.get(elemen.get("golongan", "lainnya"), "#EEE")
+                warna = warna_golongan.get(elemen.get("golongan", "lainnya"), "#E0E0E0")
                 simbol = elemen["simbol"]
-                onclick = f"window.parent.postMessage({{'type': 'streamlit:selectElement', 'value': '{simbol}'}}, '*')"
-                kolom_html += f'<div class="unsur-box" style="background-color:{warna};" onclick="{onclick}">{simbol}</div>'
+
+                if kolom[i].button(simbol, key=f"{simbol}-{i}", help=elemen["golongan"]):
+                    if simbol not in st.session_state.selected_elements:
+                        st.session_state.selected_elements.append(simbol)
+
+                    # Batasi hanya 2 unsur
+                    if len(st.session_state.selected_elements) > 2:
+                        st.session_state.selected_elements = st.session_state.selected_elements[-2:]
             else:
-                kolom_html += '<div class="unsur-box" style="background-color:white;"></div>'
-        st.markdown(kolom_html, unsafe_allow_html=True)
+                kolom[i].empty()
 
-    # Tangani klik menggunakan JS hack
-    st.markdown("""
-        <script>
-        const doc = window.parent.document;
-        window.addEventListener('message', event => {
-            if (event.data.type === 'streamlit:selectElement') {
-                const value = event.data.value;
-                const streamlitEvent = new CustomEvent('streamlit_select_element', { detail: value });
-                doc.dispatchEvent(streamlitEvent);
-            }
-        });
-        </script>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""<script>
-        const doc = window.parent.document;
-        doc.addEventListener('streamlit_select_element', e => {
-            const value = e.detail;
-            const input = doc.querySelector('input[data-testid="stTextInput"]');
-            if (window.parent.streamlitComponent) {
-                window.parent.streamlitComponent.sendValue(value);
-            }
-        });
-    </script>
-    """, unsafe_allow_html=True)
-
-    clicked = st.text_input("Klik dua unsur:", key="unsur_klik")
-    if clicked:
-        if clicked not in st.session_state.selected_elements:
-            st.session_state.selected_elements.append(clicked)
+    st.markdown("**Unsur Terpilih:** " + ", ".join(st.session_state.selected_elements))

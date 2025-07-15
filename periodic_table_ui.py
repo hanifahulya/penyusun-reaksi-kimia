@@ -1,7 +1,7 @@
 import streamlit as st
 from utils.tabel_periodik_118 import elemen_periodik
 
-# Warna golongan untuk styling
+# Warna untuk golongan unsur
 warna_golongan = {
     "logam alkali": "#FFB3BA",
     "logam alkali tanah": "#FFDFBA",
@@ -16,23 +16,47 @@ warna_golongan = {
     "lainnya": "#E0E0E0"
 }
 
-# Fungsi untuk menampilkan tabel periodik interaktif
+# CSS agar tombol terlihat rapi
+def inject_css():
+    st.markdown("""
+        <style>
+        .unsur-grid {
+            display: grid;
+            grid-template-columns: repeat(18, 50px);
+            gap: 2px;
+        }
+        .unsur-button {
+            width: 48px;
+            height: 48px;
+            border: none;
+            font-weight: bold;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+# Tampilkan tabel periodik interaktif
 def tampilkan_tabel_periodik():
-    if "selected_elements" not in st.session_state:
-        st.session_state.selected_elements = []
+    inject_css()
+    st.markdown('<div class="unsur-grid">', unsafe_allow_html=True)
 
     for baris in elemen_periodik:
-        kolom = st.columns(len(baris))
-        for i, elemen in enumerate(baris):
-            if "simbol" in elemen and elemen["simbol"]:
-                warna = warna_golongan.get(elemen.get("golongan", "lainnya"), "#EEE")
-                if kolom[i].button(elemen["simbol"], key=f"btn_{elemen['simbol']}"):
-                    if len(st.session_state.selected_elements) < 2 and elemen["simbol"] not in st.session_state.selected_elements:
-                        st.session_state.selected_elements.append(elemen["simbol"])
-                with kolom[i]:
-                    st.markdown(
-                        f"<div style='background-color:{warna};width:100%;text-align:center;border-radius:6px;padding:4px;color:black'><b>{elemen['simbol']}</b></div>",
-                        unsafe_allow_html=True
-                    )
+        for elemen in baris:
+            simbol = elemen.get("simbol", "")
+            warna = warna_golongan.get(elemen.get("golongan", "lainnya"), "#E0E0E0")
+
+            if simbol:
+                key = f"btn-{simbol}-{warna}"
+                if st.button(simbol, key=key):
+                    if "selected_elements" not in st.session_state:
+                        st.session_state.selected_elements = []
+                    if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
+                        st.session_state.selected_elements.append(simbol)
+
             else:
-                kolom[i].markdown(" ")
+                # Tambahkan div kosong untuk posisi kosong
+                st.markdown('<div style="width: 50px; height: 48px;"></div>', unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)

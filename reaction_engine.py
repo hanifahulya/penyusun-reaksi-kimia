@@ -1,54 +1,6 @@
 from utils.tabel_periodik_118 import elemen_periodik
 
-# Warna golongan untuk styling
-warna_golongan = {
-    "logam alkali": "#FFB3BA",
-    "logam alkali tanah": "#FFDFBA",
-    "logam transisi": "#FFFFBA",
-    "logam pasca transisi": "#FFE4B5",
-    "metaloid": "#BAFFC9",
-    "nonlogam": "#BAE1FF",
-    "halogen": "#D5BAFF",
-    "gas mulia": "#FFBAED",
-    "lanthanida": "#C2F0FC",
-    "aktinida": "#E6CCFF",
-    "lainnya": "#E0E0E0"
-}
-
-# Tampilkan tabel periodik
-import streamlit as st
-
-def tampilkan_tabel_periodik():
-    st.markdown("""<style>
-        .unsur-box {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            line-height: 50px;
-            margin: 1px;
-            text-align: center;
-            font-weight: bold;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>""", unsafe_allow_html=True)
-
-    for baris in elemen_periodik:
-        kolom_html = ""
-        for elemen in baris:
-            if "simbol" in elemen and elemen["simbol"]:
-                warna = warna_golongan.get(elemen.get("golongan", "lainnya"), "#EEE")
-                simbol = elemen["simbol"]
-                if st.button(simbol, key=f"{simbol}_{baris.index(elemen)}"):
-                    if simbol not in st.session_state.selected_elements:
-                        st.session_state.selected_elements.append(simbol)
-                kolom_html += f'<div class="unsur-box" style="background-color:{warna};">{simbol}</div>'
-            else:
-                kolom_html += '<div class="unsur-box" style="background-color:white;"></div>'
-        st.markdown(kolom_html, unsafe_allow_html=True)
-
-# Reaksi opsional
+# Reaksi dengan banyak kemungkinan produk (opsional)
 reaksi_opsional = {
     frozenset(["Fe", "Cl"]): [
         ("FeCl_2", "Fe + Cl_2 \\rightarrow FeCl_2"),
@@ -88,7 +40,7 @@ reaksi_opsional = {
     ]
 }
 
-# Reaksi tunggal
+# Reaksi dengan satu produk pasti
 reaksi_tunggal = {
     frozenset(["H", "O"]): "2H_2 + O_2 \\rightarrow 2H_2O",
     frozenset(["Na", "Cl"]): "2Na + Cl_2 \\rightarrow 2NaCl",
@@ -119,7 +71,7 @@ reaksi_tunggal = {
     frozenset(["Sn", "I"]): "Sn + I_2 \\rightarrow SnI_2"
 }
 
-# Gabungkan semua ke dalam satu kamus rule
+# Gabungkan semua ke reaction_rules
 reaction_rules = {}
 
 for k, v in reaksi_tunggal.items():
@@ -136,14 +88,11 @@ for k, daftar_opsi in reaksi_opsional.items():
         "jenis": "Reaksi Sintesis"
     }
 
-# Fungsi utama
+# Fungsi utama: menyusun reaksi dari dua unsur
 def susun_reaksi_dari_unsur(unsur_terpilih):
     kunci = frozenset(unsur_terpilih)
-    if kunci in reaction_rules:
-        return reaction_rules[kunci]
-    else:
-        return {
-            "produk": "Tidak diketahui",
-            "setara": "Reaksi tidak ditemukan",
-            "jenis": "Tidak diketahui"
-        }
+    return reaction_rules.get(kunci, {
+        "produk": "Tidak diketahui",
+        "setara": "Reaksi tidak ditemukan",
+        "jenis": "Tidak diketahui"
+    })

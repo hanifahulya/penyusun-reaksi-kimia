@@ -17,7 +17,7 @@ if mode == "🔬 Dari Tabel Periodik":
     tampilkan_tabel_periodik()
 
     if st.button("🔁 Reset Pilihan Unsur"):
-        st.session_state.selected_elements = []
+    st.session_state.selected_elements = []
 
     unsur_terpilih = st.session_state.get("selected_elements", [])
     if len(unsur_terpilih) == 2:

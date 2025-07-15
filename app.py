@@ -3,20 +3,20 @@ from reaction_engine import susun_reaksi_dari_unsur, susun_reaksi_dari_senyawa
 from periodic_table_ui import tampilkan_tabel_periodik
 
 st.set_page_config(page_title="Penyusun Persamaan Reaksi", layout="wide")
-st.title("🔬 Penyusun Persamaan Reaksi Kimia")
+st.title("\ud83d\udd2c Penyusun Persamaan Reaksi Kimia")
 
 # Inisialisasi session state jika belum ada
 if "selected_elements" not in st.session_state:
     st.session_state.selected_elements = []
 
-mode = st.radio("Pilih mode penyusunan reaksi:", ["🔬 Dari Tabel Periodik", "🧪 Dari Nama Senyawa"])
+mode = st.radio("Pilih mode penyusunan reaksi:", ["\ud83d\udd2c Dari Tabel Periodik", "\ud83e\uddea Dari Nama Senyawa"])
 
-if mode == "🔬 Dari Tabel Periodik":
+if mode == "\ud83d\udd2c Dari Tabel Periodik":
     st.subheader("Mode: Susun Reaksi dari Tabel Periodik")
     st.caption("Klik dua unsur dari tabel periodik di bawah untuk membentuk reaksi.")
     tampilkan_tabel_periodik()
 
-    if st.button("🔁 Reset Pilihan Unsur"):
+    if st.button("\ud83d\udd01 Reset Pilihan Unsur"):
         st.session_state.selected_elements = []
 
     unsur_terpilih = st.session_state.get("selected_elements", [])
@@ -36,15 +36,15 @@ if mode == "🔬 Dari Tabel Periodik":
         if hasil.get("jenis"):
             st.success(f"Jenis Reaksi: {hasil['jenis']}")
 
-elif mode == "🧪 Dari Nama Senyawa":
+elif mode == "\ud83e\uddea Dari Nama Senyawa":
     st.subheader("Mode: Susun Reaksi dari Nama Senyawa")
-    st.caption("Contoh: NaOH + HCl → NaCl + H₂O")
+    st.caption("Contoh: NaOH + HCl \u2192 NaCl + H\u2082O")
 
     reaktan = st.text_input("Masukkan reaktan (misal: NaOH + HCl):")
-    produk = st.text_input("Masukkan produk (misal: NaCl + H₂O):")
+    produk = st.text_input("Masukkan produk (misal: NaCl + H\u2082O):")
 
     if reaktan and produk:
-        hasil = susun_reaksi_dari_senyawa(reaktan + " → " + produk)
+        hasil = susun_reaksi_dari_senyawa(reaktan + " \u2192 " + produk)
     else:
         hasil = None
 

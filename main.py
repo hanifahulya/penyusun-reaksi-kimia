@@ -5,6 +5,7 @@ from periodic_table_ui import tampilkan_tabel_periodik
 st.set_page_config(page_title="Penyusun Persamaan Reaksi", layout="wide")
 st.title("🔬 Penyusun Persamaan Reaksi Kimia")
 
+# Inisialisasi session state jika belum ada
 if "selected_elements" not in st.session_state:
     st.session_state.selected_elements = []
 

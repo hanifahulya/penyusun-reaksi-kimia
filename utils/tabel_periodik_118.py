@@ -1,4 +1,117 @@
+# utils/tabel_periodik_118.py
 elemen_periodik = [
-    [{"simbol": "H", "golongan": "nonlogam"}] + [{}]*16 + [{"simbol": "He", "golongan": "gas mulia"}],
-    [{"simbol": "Li", "golongan": "logam alkali"}, {"simbol": "Be", "golongan": "logam alkali tanah"}] + [{}]*10 + [{"simbol": "B", "golongan": "metaloid"}, {"simbol": "C", "golongan": "nonlogam"}, {"simbol": "N", "golongan": "nonlogam"}, {"simbol": "O", "golongan": "nonlogam"}, {"simbol": "F", "golongan": "halogen"}, {"simbol": "Ne", "golongan": "gas mulia"}]
+    # Baris 1
+    [
+        {"simbol": "H", "golongan": "nonlogam"},
+        *[{} for _ in range(16)],
+        {"simbol": "He", "golongan": "gas mulia"}
+    ],
+    # Baris 2
+    [
+        {"simbol": "Li", "golongan": "logam alkali"},
+        {"simbol": "Be", "golongan": "logam alkali tanah"},
+        *[{} for _ in range(10)],
+        {"simbol": "B", "golongan": "metaloid"},
+        {"simbol": "C", "golongan": "nonlogam"},
+        {"simbol": "N", "golongan": "nonlogam"},
+        {"simbol": "O", "golongan": "nonlogam"},
+        {"simbol": "F", "golongan": "halogen"},
+        {"simbol": "Ne", "golongan": "gas mulia"}
+    ],
+    # Baris 3
+    [
+        {"simbol": "Na", "golongan": "logam alkali"},
+        {"simbol": "Mg", "golongan": "logam alkali tanah"},
+        *[{} for _ in range(10)],
+        {"simbol": "Al", "golongan": "logam pasca transisi"},
+        {"simbol": "Si", "golongan": "metaloid"},
+        {"simbol": "P", "golongan": "nonlogam"},
+        {"simbol": "S", "golongan": "nonlogam"},
+        {"simbol": "Cl", "golongan": "halogen"},
+        {"simbol": "Ar", "golongan": "gas mulia"}
+    ],
+    # Baris 4
+    [
+        {"simbol": "K", "golongan": "logam alkali"},
+        {"simbol": "Ca", "golongan": "logam alkali tanah"},
+        {"simbol": "Sc", "golongan": "logam transisi"},
+        {"simbol": "Ti", "golongan": "logam transisi"},
+        {"simbol": "V", "golongan": "logam transisi"},
+        {"simbol": "Cr", "golongan": "logam transisi"},
+        {"simbol": "Mn", "golongan": "logam transisi"},
+        {"simbol": "Fe", "golongan": "logam transisi"},
+        {"simbol": "Co", "golongan": "logam transisi"},
+        {"simbol": "Ni", "golongan": "logam transisi"},
+        {"simbol": "Cu", "golongan": "logam transisi"},
+        {"simbol": "Zn", "golongan": "logam transisi"},
+        {"simbol": "Ga", "golongan": "logam pasca transisi"},
+        {"simbol": "Ge", "golongan": "metaloid"},
+        {"simbol": "As", "golongan": "metaloid"},
+        {"simbol": "Se", "golongan": "nonlogam"},
+        {"simbol": "Br", "golongan": "halogen"},
+        {"simbol": "Kr", "golongan": "gas mulia"}
+    ],
+    # Baris 5
+    [
+        {"simbol": "Rb", "golongan": "logam alkali"},
+        {"simbol": "Sr", "golongan": "logam alkali tanah"},
+        {"simbol": "Y", "golongan": "logam transisi"},
+        {"simbol": "Zr", "golongan": "logam transisi"},
+        {"simbol": "Nb", "golongan": "logam transisi"},
+        {"simbol": "Mo", "golongan": "logam transisi"},
+        {"simbol": "Tc", "golongan": "logam transisi"},
+        {"simbol": "Ru", "golongan": "logam transisi"},
+        {"simbol": "Rh", "golongan": "logam transisi"},
+        {"simbol": "Pd", "golongan": "logam transisi"},
+        {"simbol": "Ag", "golongan": "logam transisi"},
+        {"simbol": "Cd", "golongan": "logam transisi"},
+        {"simbol": "In", "golongan": "logam pasca transisi"},
+        {"simbol": "Sn", "golongan": "logam pasca transisi"},
+        {"simbol": "Sb", "golongan": "metaloid"},
+        {"simbol": "Te", "golongan": "metaloid"},
+        {"simbol": "I", "golongan": "halogen"},
+        {"simbol": "Xe", "golongan": "gas mulia"}
+    ],
+    # Baris 6
+    [
+        {"simbol": "Cs", "golongan": "logam alkali"},
+        {"simbol": "Ba", "golongan": "logam alkali tanah"},
+        *[{"simbol": "", "golongan": "lanthanida"} for _ in range(1)],
+        {"simbol": "Hf", "golongan": "logam transisi"},
+        {"simbol": "Ta", "golongan": "logam transisi"},
+        {"simbol": "W", "golongan": "logam transisi"},
+        {"simbol": "Re", "golongan": "logam transisi"},
+        {"simbol": "Os", "golongan": "logam transisi"},
+        {"simbol": "Ir", "golongan": "logam transisi"},
+        {"simbol": "Pt", "golongan": "logam transisi"},
+        {"simbol": "Au", "golongan": "logam transisi"},
+        {"simbol": "Hg", "golongan": "logam transisi"},
+        {"simbol": "Tl", "golongan": "logam pasca transisi"},
+        {"simbol": "Pb", "golongan": "logam pasca transisi"},
+        {"simbol": "Bi", "golongan": "logam pasca transisi"},
+        {"simbol": "Po", "golongan": "metaloid"},
+        {"simbol": "At", "golongan": "halogen"},
+        {"simbol": "Rn", "golongan": "gas mulia"}
+    ],
+    # Baris 7
+    [
+        {"simbol": "Fr", "golongan": "logam alkali"},
+        {"simbol": "Ra", "golongan": "logam alkali tanah"},
+        *[{"simbol": "", "golongan": "aktinida"} for _ in range(1)],
+        {"simbol": "Rf", "golongan": "logam transisi"},
+        {"simbol": "Db", "golongan": "logam transisi"},
+        {"simbol": "Sg", "golongan": "logam transisi"},
+        {"simbol": "Bh", "golongan": "logam transisi"},
+        {"simbol": "Hs", "golongan": "logam transisi"},
+        {"simbol": "Mt", "golongan": "logam transisi"},
+        {"simbol": "Ds", "golongan": "logam transisi"},
+        {"simbol": "Rg", "golongan": "logam transisi"},
+        {"simbol": "Cn", "golongan": "logam transisi"},
+        {"simbol": "Nh", "golongan": "logam pasca transisi"},
+        {"simbol": "Fl", "golongan": "logam pasca transisi"},
+        {"simbol": "Mc", "golongan": "logam pasca transisi"},
+        {"simbol": "Lv", "golongan": "logam pasca transisi"},
+        {"simbol": "Ts", "golongan": "halogen"},
+        {"simbol": "Og", "golongan": "gas mulia"}
+    ]
 ]

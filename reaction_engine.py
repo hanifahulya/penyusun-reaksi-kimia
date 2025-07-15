@@ -1,12 +1,153 @@
+import streamlit as st
+from utils.tabel_periodik_118 import elemen_periodik
+
+# Warna golongan untuk styling
+warna_golongan = {
+    "logam alkali": "#FFB3BA",
+    "logam alkali tanah": "#FFDFBA",
+    "logam transisi": "#FFFFBA",
+    "logam pasca transisi": "#FFE4B5",
+    "metaloid": "#BAFFC9",
+    "nonlogam": "#BAE1FF",
+    "halogen": "#D5BAFF",
+    "gas mulia": "#FFBAED",
+    "lanthanida": "#C2F0FC",
+    "aktinida": "#E6CCFF",
+    "lainnya": "#E0E0E0"
+}
+
+# Tampilkan tabel periodik
+def tampilkan_tabel_periodik():
+    st.markdown("""<style>
+        .unsur-box {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            margin: 1px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+    </style>""", unsafe_allow_html=True)
+
+    for baris in elemen_periodik:
+        kolom_html = ""
+        for elemen in baris:
+            if "simbol" in elemen and elemen["simbol"]:
+                warna = warna_golongan.get(elemen.get("golongan", "lainnya"), "#EEE")
+                kolom_html += f'<div class="unsur-box" style="background-color:{warna};">{elemen["simbol"]}</div>'
+            else:
+                kolom_html += '<div class="unsur-box" style="background-color:white;"></div>'
+        st.markdown(kolom_html, unsafe_allow_html=True)
+
+# Reaksi opsional (banyak kemungkinan produk)
+reaksi_opsional = {
+    frozenset(["Fe", "Cl"]): [
+        ("FeCl_2", "Fe + Cl_2 \\rightarrow FeCl_2"),
+        ("FeCl_3", "2Fe + 3Cl_2 \\rightarrow 2FeCl_3")
+    ],
+    frozenset(["Cu", "Cl"]): [
+        ("CuCl", "Cu + Cl_2 \\rightarrow CuCl"),
+        ("CuCl_2", "Cu + Cl_2 \\rightarrow CuCl_2")
+    ],
+    frozenset(["Pb", "O"]): [
+        ("PbO", "2Pb + O_2 \\rightarrow 2PbO"),
+        ("PbO_2", "Pb + O_2 \\rightarrow PbO_2")
+    ],
+    frozenset(["Sn", "Cl"]): [
+        ("SnCl_2", "Sn + Cl_2 \\rightarrow SnCl_2"),
+        ("SnCl_4", "Sn + 2Cl_2 \\rightarrow SnCl_4")
+    ],
+    frozenset(["N", "O"]): [
+        ("NO", "N_2 + O_2 \\rightarrow 2NO"),
+        ("NO_2", "N_2 + 2O_2 \\rightarrow 2NO_2")
+    ],
+    frozenset(["P", "Cl"]): [
+        ("PCl_3", "2P + 3Cl_2 \\rightarrow 2PCl_3"),
+        ("PCl_5", "2P + 5Cl_2 \\rightarrow 2PCl_5")
+    ],
+    frozenset(["S", "O"]): [
+        ("SO_2", "S + O_2 \\rightarrow SO_2"),
+        ("SO_3", "2S + 3O_2 \\rightarrow 2SO_3")
+    ],
+    frozenset(["C", "O"]): [
+        ("CO", "2C + O_2 \\rightarrow 2CO"),
+        ("CO_2", "C + O_2 \\rightarrow CO_2")
+    ],
+    frozenset(["Pb", "Cl"]): [
+        ("PbCl_2", "Pb + Cl_2 \\rightarrow PbCl_2"),
+        ("PbCl_4", "Pb + 2Cl_2 \\rightarrow PbCl_4")
+    ]
+}
+
+# Reaksi tunggal (satu reaksi pasti)
+reaksi_tunggal = {
+    frozenset(["H", "O"]): "2H_2 + O_2 \\rightarrow 2H_2O",
+    frozenset(["Na", "Cl"]): "2Na + Cl_2 \\rightarrow 2NaCl",
+    frozenset(["Mg", "O"]): "2Mg + O_2 \\rightarrow 2MgO",
+    frozenset(["Mg", "Cl"]): "Mg + Cl_2 \\rightarrow MgCl_2",
+    frozenset(["Fe", "S"]): "Fe + S \\rightarrow FeS",
+    frozenset(["Ca", "Cl"]): "Ca + Cl_2 \\rightarrow CaCl_2",
+    frozenset(["Ca", "O"]): "2Ca + O_2 \\rightarrow 2CaO",
+    frozenset(["Al", "O"]): "4Al + 3O_2 \\rightarrow 2Al_2O_3",
+    frozenset(["Zn", "Cl"]): "Zn + Cl_2 \\rightarrow ZnCl_2",
+    frozenset(["K", "Br"]): "2K + Br_2 \\rightarrow 2KBr",
+    frozenset(["Ba", "Cl"]): "Ba + Cl_2 \\rightarrow BaCl_2",
+    frozenset(["Li", "Cl"]): "2Li + Cl_2 \\rightarrow 2LiCl",
+    frozenset(["Cu", "O"]): "2Cu + O_2 \\rightarrow 2CuO",
+    frozenset(["Ag", "Cl"]): "2Ag + Cl_2 \\rightarrow 2AgCl",
+    frozenset(["C", "H"]): "C + 2H_2 \\rightarrow CH_4",
+    frozenset(["Si", "O"]): "Si + O_2 \\rightarrow SiO_2",
+    frozenset(["B", "Cl"]): "2B + 3Cl_2 \\rightarrow 2BCl_3",
+    frozenset(["Ca", "Br"]): "Ca + Br_2 \\rightarrow CaBr_2",
+    frozenset(["Na", "Br"]): "2Na + Br_2 \\rightarrow 2NaBr",
+    frozenset(["K", "I"]): "2K + I_2 \\rightarrow 2KI",
+    frozenset(["Al", "Br"]): "2Al + 3Br_2 \\rightarrow 2AlBr_3",
+    frozenset(["Ba", "I"]): "Ba + I_2 \\rightarrow BaI_2",
+    frozenset(["H", "Cl"]): "H_2 + Cl_2 \\rightarrow 2HCl",
+    frozenset(["H", "Br"]): "H_2 + Br_2 \\rightarrow 2HBr",
+    frozenset(["H", "I"]): "H_2 + I_2 \\rightarrow 2HI",
+    frozenset(["Zn", "Br"]): "Zn + Br_2 \\rightarrow ZnBr_2",
+    frozenset(["Sn", "I"]): "Sn + I_2 \\rightarrow SnI_2"
+}
+
+# Gabungkan jadi satu rules dict
+reaction_rules = {}
+for k, v in reaksi_tunggal.items():
+    reaction_rules[k] = {
+        "produk": v.split("→")[-1].strip(),
+        "setara": v,
+        "jenis": "Reaksi Sintesis"
+    }
+
+for k, daftar_opsi in reaksi_opsional.items():
+    reaction_rules[k] = {
+        "opsi": [item[0] for item in daftar_opsi],
+        "setara_opsi": [item[1] for item in daftar_opsi],
+        "jenis": "Reaksi Sintesis"
+    }
+
+# Fungsi penyusun dari unsur
 def susun_reaksi_dari_unsur(unsur_terpilih):
     kunci = frozenset(unsur_terpilih)
-    if kunci == frozenset(["H", "Cl"]):
-        return {"setara": "H_2 + Cl_2 \\rightarrow 2HCl", "jenis": "Reaksi Sintesis"}
-    elif kunci == frozenset(["Na", "Cl"]):
-        return {"setara": "2Na + Cl_2 \\rightarrow 2NaCl", "jenis": "Reaksi Sintesis"}
+    if kunci in reaksi_opsional:
+        return {
+            "produk_opsional": [item[0] for item in reaksi_opsional[kunci]],
+            "setara_opsi": [item[1] for item in reaksi_opsional[kunci]],
+            "jenis": "Reaksi Sintesis"
+        }
+    elif kunci in reaction_rules:
+        return reaction_rules[kunci]
     else:
-        return {"setara": "Reaksi tidak ditemukan", "jenis": "Tidak diketahui"}
+        return {
+            "produk": "Tidak diketahui",
+            "setara": "Reaksi tidak ditemukan",
+            "jenis": "Tidak diketahui"
+        }
 
+# Fungsi penyusun dari senyawa
 def susun_reaksi_dari_senyawa(nama_senyawa):
     return {
         "produk": nama_senyawa,

@@ -1,23 +1,6 @@
-import streamlit as st
 from utils.tabel_periodik_118 import elemen_periodik
 
-# Warna golongan untuk styling
-warna_golongan = {
-    "logam alkali": "#FFB3BA",
-    "logam alkali tanah": "#FFDFBA",
-    "logam transisi": "#FFFFBA",
-    "logam pasca transisi": "#FFE4B5",
-    "metaloid": "#BAFFC9",
-    "nonlogam": "#BAE1FF",
-    "halogen": "#D5BAFF",
-    "gas mulia": "#FFBAED",
-    "lanthanida": "#C2F0FC",
-    "aktinida": "#E6CCFF",
-    "lainnya": "#E0E0E0"
-}
-
-
-# Reaksi opsional (banyak kemungkinan produk)
+# Reaksi opsional (lebih dari satu kemungkinan produk)
 reaksi_opsional = {
     frozenset(["Fe", "Cl"]): [
         ("FeCl_2", "Fe + Cl_2 \\rightarrow FeCl_2"),
@@ -57,7 +40,7 @@ reaksi_opsional = {
     ]
 }
 
-# Reaksi tunggal (satu reaksi pasti)
+# Reaksi tunggal (reaksi pasti)
 reaksi_tunggal = {
     frozenset(["H", "O"]): "2H_2 + O_2 \\rightarrow 2H_2O",
     frozenset(["Na", "Cl"]): "2Na + Cl_2 \\rightarrow 2NaCl",
@@ -88,7 +71,7 @@ reaksi_tunggal = {
     frozenset(["Sn", "I"]): "Sn + I_2 \\rightarrow SnI_2"
 }
 
-# Gabungkan jadi satu rules dict
+# Gabungkan semua ke dalam satu rules
 reaction_rules = {}
 for k, v in reaksi_tunggal.items():
     reaction_rules[k] = {
@@ -104,7 +87,7 @@ for k, daftar_opsi in reaksi_opsional.items():
         "jenis": "Reaksi Sintesis"
     }
 
-# Fungsi penyusun dari unsur
+# Fungsi untuk menyusun reaksi dari dua unsur
 def susun_reaksi_dari_unsur(unsur_terpilih):
     kunci = frozenset(unsur_terpilih)
     if kunci in reaksi_opsional:
@@ -122,7 +105,7 @@ def susun_reaksi_dari_unsur(unsur_terpilih):
             "jenis": "Tidak diketahui"
         }
 
-# Fungsi penyusun dari senyawa
+# Fungsi untuk menyusun reaksi dari nama senyawa
 def susun_reaksi_dari_senyawa(nama_senyawa):
     return {
         "produk": nama_senyawa,

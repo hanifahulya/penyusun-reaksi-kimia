@@ -19,21 +19,28 @@ def tampilkan_tabel_periodik():
     if "selected_elements" not in st.session_state:
         st.session_state.selected_elements = []
 
-    for baris in elemen_periodik:
+    st.write("Klik 2 unsur untuk menyusun reaksi. Maksimal 2 unsur!")
+
+    for baris_idx, baris in enumerate(elemen_periodik):
         kolom = st.columns(len(baris))
         for i, elemen in enumerate(baris):
             if "simbol" in elemen and elemen["simbol"]:
-                warna = warna_golongan.get(elemen.get("golongan", "lainnya"), "#E0E0E0")
                 simbol = elemen["simbol"]
+                warna = warna_golongan.get(elemen.get("golongan", "lainnya"), "#CCCCCC")
 
-                if kolom[i].button(simbol, key=f"{simbol}-{i}", help=elemen["golongan"]):
-                    if simbol not in st.session_state.selected_elements:
-                        st.session_state.selected_elements.append(simbol)
-
-                    # Batasi hanya 2 unsur
-                    if len(st.session_state.selected_elements) > 2:
-                        st.session_state.selected_elements = st.session_state.selected_elements[-2:]
+                with kolom[i]:
+                    klik = st.button(
+                        simbol,
+                        key=f"{simbol}-{baris_idx}-{i}",
+                        help=f"{simbol} ({elemen['golongan']})"
+                    )
+                    if klik:
+                        if simbol not in st.session_state.selected_elements:
+                            st.session_state.selected_elements.append(simbol)
+                        if len(st.session_state.selected_elements) > 2:
+                            st.session_state.selected_elements = st.session_state.selected_elements[-2:]
             else:
-                kolom[i].empty()
+                with kolom[i]:
+                    st.markdown("")
 
-    st.markdown("**Unsur Terpilih:** " + ", ".join(st.session_state.selected_elements))
+    st.markdown(f"**Unsur Terpilih:** {', '.join(st.session_state.selected_elements)}")

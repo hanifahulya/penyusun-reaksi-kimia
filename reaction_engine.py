@@ -16,31 +16,6 @@ warna_golongan = {
     "lainnya": "#E0E0E0"
 }
 
-# Tampilkan tabel periodik
-def tampilkan_tabel_periodik():
-    st.markdown("""<style>
-        .unsur-box {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            line-height: 50px;
-            margin: 1px;
-            text-align: center;
-            font-weight: bold;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-    </style>""", unsafe_allow_html=True)
-
-    for baris in elemen_periodik:
-        kolom_html = ""
-        for elemen in baris:
-            if "simbol" in elemen and elemen["simbol"]:
-                warna = warna_golongan.get(elemen.get("golongan", "lainnya"), "#EEE")
-                kolom_html += f'<div class="unsur-box" style="background-color:{warna};">{elemen["simbol"]}</div>'
-            else:
-                kolom_html += '<div class="unsur-box" style="background-color:white;"></div>'
-        st.markdown(kolom_html, unsafe_allow_html=True)
 
 # Reaksi opsional (banyak kemungkinan produk)
 reaksi_opsional = {

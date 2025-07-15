@@ -1,4 +1,3 @@
-# utils/tabel_periodik_118.py
 elemen_periodik = [
     # Baris 1
     [
@@ -76,7 +75,7 @@ elemen_periodik = [
     [
         {"simbol": "Cs", "golongan": "logam alkali"},
         {"simbol": "Ba", "golongan": "logam alkali tanah"},
-        *[{"simbol": "", "golongan": "lanthanida"} for _ in range(1)],
+        *[{"simbol": "", "golongan": "lanthanida"}],
         {"simbol": "Hf", "golongan": "logam transisi"},
         {"simbol": "Ta", "golongan": "logam transisi"},
         {"simbol": "W", "golongan": "logam transisi"},
@@ -97,7 +96,7 @@ elemen_periodik = [
     [
         {"simbol": "Fr", "golongan": "logam alkali"},
         {"simbol": "Ra", "golongan": "logam alkali tanah"},
-        *[{"simbol": "", "golongan": "aktinida"} for _ in range(1)],
+        *[{"simbol": "", "golongan": "aktinida"}],
         {"simbol": "Rf", "golongan": "logam transisi"},
         {"simbol": "Db", "golongan": "logam transisi"},
         {"simbol": "Sg", "golongan": "logam transisi"},

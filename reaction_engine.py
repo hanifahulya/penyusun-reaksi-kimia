@@ -1,6 +1,21 @@
-from utils.tabel_periodik_118 import elemen_periodik
+from utils.tabel_periodik_118 import elemen_periodik, massa_atom_relatif
 
-# Reaksi dengan banyak kemungkinan produk (opsional)
+# Warna golongan untuk styling
+warna_golongan = {
+    "logam alkali": "#FFB3BA",
+    "logam alkali tanah": "#FFDFBA",
+    "logam transisi": "#FFFFBA",
+    "logam pasca transisi": "#FFE4B5",
+    "metaloid": "#BAFFC9",
+    "nonlogam": "#BAE1FF",
+    "halogen": "#D5BAFF",
+    "gas mulia": "#FFBAED",
+    "lanthanida": "#C2F0FC",
+    "aktinida": "#E6CCFF",
+    "lainnya": "#E0E0E0"
+}
+
+# Reaksi dengan lebih dari satu kemungkinan produk
 reaksi_opsional = {
     frozenset(["Fe", "Cl"]): [
         ("FeCl_2", "Fe + Cl_2 \\rightarrow FeCl_2"),
@@ -40,7 +55,7 @@ reaksi_opsional = {
     ]
 }
 
-# Reaksi dengan satu produk pasti
+# Reaksi tunggal pasti
 reaksi_tunggal = {
     frozenset(["H", "O"]): "2H_2 + O_2 \\rightarrow 2H_2O",
     frozenset(["Na", "Cl"]): "2Na + Cl_2 \\rightarrow 2NaCl",
@@ -73,7 +88,6 @@ reaksi_tunggal = {
 
 # Gabungkan semua ke reaction_rules
 reaction_rules = {}
-
 for k, v in reaksi_tunggal.items():
     reaction_rules[k] = {
         "produk": v.split("→")[-1].strip(),
@@ -88,11 +102,34 @@ for k, daftar_opsi in reaksi_opsional.items():
         "jenis": "Reaksi Sintesis"
     }
 
-# Fungsi utama: menyusun reaksi dari dua unsur
+# Fungsi utama untuk reaksi dari unsur
 def susun_reaksi_dari_unsur(unsur_terpilih):
     kunci = frozenset(unsur_terpilih)
-    return reaction_rules.get(kunci, {
-        "produk": "Tidak diketahui",
-        "setara": "Reaksi tidak ditemukan",
-        "jenis": "Tidak diketahui"
-    })
+    if kunci in reaksi_opsional:
+        return {
+            "produk_opsional": [item[0] for item in reaksi_opsional[kunci]],
+            "setara_opsi": [item[1] for item in reaksi_opsional[kunci]],
+            "jenis": "Reaksi Sintesis"
+        }
+    elif kunci in reaction_rules:
+        return reaction_rules[kunci]
+    else:
+        return {
+            "produk": "Tidak diketahui",
+            "setara": "Reaksi tidak ditemukan",
+            "jenis": "Tidak diketahui"
+        }
+
+# Fungsi hitung massa molekul relatif
+def hitung_massa_molekul(rumus):
+    import re
+    pattern = r"([A-Z][a-z]?)(\d*)"
+    total = 0
+    try:
+        for simbol, jumlah in re.findall(pattern, rumus):
+            jumlah = int(jumlah) if jumlah else 1
+            ar = massa_atom_relatif.get(simbol, 0)
+            total += ar * jumlah
+        return total
+    except Exception:
+        return None

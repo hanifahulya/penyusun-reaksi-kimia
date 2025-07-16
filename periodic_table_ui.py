@@ -1,36 +1,20 @@
 import streamlit as st
-from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
-
-# Warna golongan
-warna_golongan = {
-    "logam alkali": "#FFB3BA",
-    "logam alkali tanah": "#FFDFBA",
-    "logam transisi": "#FFFFBA",
-    "logam pasca transisi": "#FFE4B5",
-    "metaloid": "#BAFFC9",
-    "nonlogam": "#BAE1FF",
-    "halogen": "#D5BAFF",
-    "gas mulia": "#FFBAED",
-    "lanthanida": "#C2F0FC",
-    "aktinida": "#E6CCFF",
-    "lainnya": "#E0E0E0"
-}
+from utils.tabel_periodik_118 import elemen_periodik, warna_golongan
 
 def tampilkan_tabel_periodik():
     for baris in elemen_periodik:
         kolom = st.columns(len(baris))
-        for i, elemen in enumerate(baris):
+        for idx, elemen in enumerate(baris):
             simbol = elemen.get("simbol", "")
-            golongan = elemen.get("golongan", "lainnya")
-            warna = warna_golongan.get(golongan, "#E0E0E0")
+            golongan = elemen.get("golongan", "")
+            warna = warna_golongan.get(golongan, "#FFFFFF")
+
             if simbol:
-                Ar = Ar_tiap_unsur.get(simbol, "")
-                label = f"{simbol}"
-                tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol
-                if kolom[i].button(label, help=tooltip, key=f"{simbol}_{i}", use_container_width=True):
+                if kolom[idx].button(simbol, key=f"{simbol}_{idx}", help=f"{simbol} - {golongan}", use_container_width=True):
                     if "selected_elements" not in st.session_state:
                         st.session_state.selected_elements = []
-                    if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
+                    if len(st.session_state.selected_elements) < 2:
                         st.session_state.selected_elements.append(simbol)
             else:
-                kolom[i].markdown(" ")  
+                # Tampilkan tombol kosong agar grid tetap terjaga
+                kolom[idx].markdown(f"<div style='height: 2.5em; background-color: white;'></div>", unsafe_allow_html=True)

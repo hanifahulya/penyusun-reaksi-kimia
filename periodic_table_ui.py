@@ -1,53 +1,32 @@
 import streamlit as st
-from utils.tabel_periodik_118 import elemen_periodik
-
-warna_golongan = {
-    "logam alkali": "#FFB3BA",
-    "logam alkali tanah": "#FFDFBA",
-    "logam transisi": "#FFFFBA",
-    "logam pasca transisi": "#FFE4B5",
-    "metaloid": "#BAFFC9",
-    "nonlogam": "#BAE1FF",
-    "halogen": "#D5BAFF",
-    "gas mulia": "#FFBAED",
-    "lanthanida": "#C2F0FC",
-    "aktinida": "#E6CCFF",
-    "lainnya": "#E0E0E0"
-}
+from utils.tabel_periodik_118 import elemen_periodik, warna_golongan
 
 def tampilkan_tabel_periodik():
-    st.markdown("""
-        <style>
-            .unsur-box {
-                display: inline-block;
-                width: 50px;
-                height: 50px;
-                line-height: 50px;
-                margin: 1px;
-                text-align: center;
-                font-weight: bold;
-                border-radius: 6px;
-                font-size: 16px;
-                cursor: pointer;
-            }
-        </style>
-    """, unsafe_allow_html=True)
+    selected_golongan = st.selectbox("Filter golongan (opsional)", ["Semua"] + list(warna_golongan.keys()))
 
     for baris in elemen_periodik:
         kolom_html = ""
         for elemen in baris:
             simbol = elemen.get("simbol", "")
+            golongan = elemen.get("golongan", "")
             if simbol:
-                warna = warna_golongan.get(elemen.get("golongan", "lainnya"), "#E0E0E0")
-                onclick = f"onClick=\"document.getElementById('{simbol}_btn').click()\""
-                kolom_html += f'<div class="unsur-box" style="background-color:{warna};" {onclick}>{simbol}</div>'
+                if selected_golongan != "Semua" and golongan != selected_golongan:
+                    continue
+                warna = warna_golongan.get(golongan, "#EEE")
+                kolom_html += f"""
+                <button class="unsur-btn" onclick="fetch('/?element={simbol}')"
+                style="background-color:{warna};width:50px;height:50px;margin:1px;border-radius:6px;font-weight:bold;">
+                {simbol}</button>"""
             else:
-                kolom_html += '<div class="unsur-box" style="background-color:white;"></div>'
-        st.markdown(kolom_html, unsafe_allow_html=True)
+                kolom_html += '<div style="width:50px;height:50px;margin:1px;"></div>'
+        st.markdown(f"<div style='display:flex;flex-wrap:wrap'>{kolom_html}</div>", unsafe_allow_html=True)
 
+    if "selected_elements" not in st.session_state:
+        st.session_state.selected_elements = []
+
+    for baris in elemen_periodik:
         for elemen in baris:
-            simbol = elemen.get("simbol", "")
-            if simbol:
-                if st.button(" ", key=f"{simbol}_btn"):
-                    if simbol not in st.session_state.selected_elements and len(st.session_state.selected_elements) < 2:
-                        st.session_state.selected_elements.append(simbol)
+            simbol = elemen.get("simbol")
+            if simbol and st.button(simbol, key=f"btn_{simbol}"):
+                if simbol not in st.session_state.selected_elements and len(st.session_state.selected_elements) < 2:
+                    st.session_state.selected_elements.append(simbol)

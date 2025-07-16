@@ -1,11 +1,10 @@
 import streamlit as st
-from reaction_engine import susun_reaksi_dari_unsur
+from reaction_engine import susun_reaksi_dari_unsur, hitung_massa_molekul
 from periodic_table_ui import tampilkan_tabel_periodik
 
 st.set_page_config(page_title="Penyusun Persamaan Reaksi", layout="wide")
 st.title("🔬 Penyusun Persamaan Reaksi Kimia")
 
-# Inisialisasi session state jika belum ada
 if "selected_elements" not in st.session_state:
     st.session_state.selected_elements = []
 
@@ -32,3 +31,9 @@ if hasil:
 
     if hasil.get("jenis"):
         st.success(f"Jenis Reaksi: {hasil['jenis']}")
+
+    if hasil.get("produk") or hasil.get("produk_opsional"):
+        produk_akhir = hasil.get("produk") if hasil.get("produk") else hasil.get("produk_opsional")[0]
+        mr = hitung_massa_molekul(produk_akhir)
+        if mr:
+            st.info(f"Massa molekul relatif (Mr) dari {produk_akhir}: {mr:.2f}")

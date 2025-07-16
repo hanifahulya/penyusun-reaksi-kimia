@@ -33,8 +33,8 @@ if hasil:
     if hasil.get("jenis"):
         st.success(f"Jenis Reaksi: {hasil['jenis']}")
 
-    if hasil.get("produk") or hasil.get("produk_opsional"):
-        produk_akhir = hasil.get("produk") if hasil.get("produk") else hasil.get("produk_opsional")[0]
+    produk_akhir = hasil.get("produk") or (hasil.get("produk_opsional") or [None])[0]
+    if produk_akhir:
         mr = hitung_massa_molekul(produk_akhir)
         if mr:
             st.info(f"Massa molekul relatif (Mr) dari {produk_akhir}: {mr:.2f}")

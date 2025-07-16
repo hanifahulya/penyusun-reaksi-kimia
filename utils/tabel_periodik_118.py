@@ -66,22 +66,43 @@ reaksi_tunggal = {
 
 # 🔁 Reaksi opsional (multi produk)
 reaksi_opsional = {
-    frozenset(["Fe", "Cl"]): [
+   frozenset(["Fe", "Cl"]): [
         ("FeCl_2", "Fe + Cl_2 \\rightarrow FeCl_2"),
         ("FeCl_3", "2Fe + 3Cl_2 \\rightarrow 2FeCl_3")
-    ],
-    frozenset(["N", "O"]): [
-        ("NO", "N_2 + O_2 \\rightarrow 2NO"),
-        ("NO_2", "N_2 + 2O_2 \\rightarrow 2NO_2")
     ],
     frozenset(["Pb", "O"]): [
         ("PbO", "2Pb + O_2 \\rightarrow 2PbO"),
         ("PbO_2", "Pb + O_2 \\rightarrow PbO_2")
     ],
+    frozenset(["N", "O"]): [
+        ("NO", "N_2 + O_2 \\rightarrow 2NO"),
+        ("NO_2", "N_2 + 2O_2 \\rightarrow 2NO_2")
+    ],
+    frozenset(["Cu", "Cl"]): [
+        ("CuCl", "Cu + Cl_2 \\rightarrow CuCl"),
+        ("CuCl_2", "Cu + Cl_2 \\rightarrow CuCl_2")
+    ],
+     frozenset(["Sn", "Cl"]): [
+        ("SnCl_2", "Sn + Cl_2 \\rightarrow SnCl_2"),
+        ("SnCl_4", "Sn + 2Cl_2 \\rightarrow SnCl_4")
+    ],
     frozenset(["P", "Cl"]): [
         ("PCl_3", "2P + 3Cl_2 \\rightarrow 2PCl_3"),
         ("PCl_5", "2P + 5Cl_2 \\rightarrow 2PCl_5")
+    ],
+    frozenset(["S", "O"]): [
+        ("SO_2", "S + O_2 \\rightarrow SO_2"),
+        ("SO_3", "2S + 3O_2 \\rightarrow 2SO_3")
+    ],
+    frozenset(["C", "O"]): [
+        ("CO", "2C + O_2 \\rightarrow 2CO"),
+        ("CO_2", "C + O_2 \\rightarrow CO_2")
+    ],
+    frozenset(["Pb", "Cl"]): [
+        ("PbCl_2", "Pb + Cl_2 \\rightarrow PbCl_2"),
+        ("PbCl_4", "Pb + 2Cl_2 \\rightarrow PbCl_4")
     ]
+}
 }
 
 elemen_periodik = [

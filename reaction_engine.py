@@ -1,41 +1,27 @@
-from utils.tabel_periodik_118 import elemen_periodik, massa_atom_relatif
+import re
+from utils.tabel_periodik_118 import massa_atom, elemen_periodik
 
-# Warna golongan untuk styling
-warna_golongan = {
-    "logam alkali": "#FFB3BA",
-    "logam alkali tanah": "#FFDFBA",
-    "logam transisi": "#FFFFBA",
-    "logam pasca transisi": "#FFE4B5",
-    "metaloid": "#BAFFC9",
-    "nonlogam": "#BAE1FF",
-    "halogen": "#D5BAFF",
-    "gas mulia": "#FFBAED",
-    "lanthanida": "#C2F0FC",
-    "aktinida": "#E6CCFF",
-    "lainnya": "#E0E0E0"
-}
-
-# Reaksi dengan lebih dari satu kemungkinan produk
+# Reaksi opsional (banyak kemungkinan produk)
 reaksi_opsional = {
     frozenset(["Fe", "Cl"]): [
         ("FeCl_2", "Fe + Cl_2 \\rightarrow FeCl_2"),
         ("FeCl_3", "2Fe + 3Cl_2 \\rightarrow 2FeCl_3")
     ],
-    frozenset(["Cu", "Cl"]): [
-        ("CuCl", "Cu + Cl_2 \\rightarrow CuCl"),
-        ("CuCl_2", "Cu + Cl_2 \\rightarrow CuCl_2")
-    ],
     frozenset(["Pb", "O"]): [
         ("PbO", "2Pb + O_2 \\rightarrow 2PbO"),
         ("PbO_2", "Pb + O_2 \\rightarrow PbO_2")
     ],
-    frozenset(["Sn", "Cl"]): [
-        ("SnCl_2", "Sn + Cl_2 \\rightarrow SnCl_2"),
-        ("SnCl_4", "Sn + 2Cl_2 \\rightarrow SnCl_4")
-    ],
     frozenset(["N", "O"]): [
         ("NO", "N_2 + O_2 \\rightarrow 2NO"),
         ("NO_2", "N_2 + 2O_2 \\rightarrow 2NO_2")
+    ],
+    frozenset(["Cu", "Cl"]): [
+        ("CuCl", "Cu + Cl_2 \\rightarrow CuCl"),
+        ("CuCl_2", "Cu + Cl_2 \\rightarrow CuCl_2")
+    ],
+     frozenset(["Sn", "Cl"]): [
+        ("SnCl_2", "Sn + Cl_2 \\rightarrow SnCl_2"),
+        ("SnCl_4", "Sn + 2Cl_2 \\rightarrow SnCl_4")
     ],
     frozenset(["P", "Cl"]): [
         ("PCl_3", "2P + 3Cl_2 \\rightarrow 2PCl_3"),
@@ -55,10 +41,11 @@ reaksi_opsional = {
     ]
 }
 
-# Reaksi tunggal pasti
+# Reaksi tunggal
 reaksi_tunggal = {
     frozenset(["H", "O"]): "2H_2 + O_2 \\rightarrow 2H_2O",
     frozenset(["Na", "Cl"]): "2Na + Cl_2 \\rightarrow 2NaCl",
+    frozenset(["C", "O"]): "C + O_2 \\rightarrow CO_2",
     frozenset(["Mg", "O"]): "2Mg + O_2 \\rightarrow 2MgO",
     frozenset(["Mg", "Cl"]): "Mg + Cl_2 \\rightarrow MgCl_2",
     frozenset(["Fe", "S"]): "Fe + S \\rightarrow FeS",
@@ -86,50 +73,35 @@ reaksi_tunggal = {
     frozenset(["Sn", "I"]): "Sn + I_2 \\rightarrow SnI_2"
 }
 
-# Gabungkan semua ke reaction_rules
 reaction_rules = {}
 for k, v in reaksi_tunggal.items():
-    reaction_rules[k] = {
-        "produk": v.split("→")[-1].strip(),
-        "setara": v,
-        "jenis": "Reaksi Sintesis"
-    }
+    produk = v.split("\\rightarrow")[-1].strip()
+    reaction_rules[k] = {"produk": produk, "setara": v, "jenis": "Reaksi Sintesis"}
 
 for k, daftar_opsi in reaksi_opsional.items():
-    reaction_rules[k] = {
-        "produk_opsional": [item[0] for item in daftar_opsi],
-        "setara_opsi": [item[1] for item in daftar_opsi],
-        "jenis": "Reaksi Sintesis"
-    }
+    produk_opsi = [item[0] for item in daftar_opsi]
+    setara_opsi = [item[1] for item in daftar_opsi]
+    reaction_rules[k] = {"produk_opsional": produk_opsi, "setara_opsi": setara_opsi, "jenis": "Reaksi Sintesis"}
 
-# Fungsi utama untuk reaksi dari unsur
 def susun_reaksi_dari_unsur(unsur_terpilih):
     kunci = frozenset(unsur_terpilih)
-    if kunci in reaksi_opsional:
-        return {
-            "produk_opsional": [item[0] for item in reaksi_opsional[kunci]],
-            "setara_opsi": [item[1] for item in reaksi_opsional[kunci]],
-            "jenis": "Reaksi Sintesis"
-        }
-    elif kunci in reaction_rules:
-        return reaction_rules[kunci]
-    else:
-        return {
-            "produk": "Tidak diketahui",
-            "setara": "Reaksi tidak ditemukan",
-            "jenis": "Tidak diketahui"
-        }
+    return reaction_rules.get(kunci, {
+        "produk": "Tidak diketahui",
+        "setara": "Reaksi tidak ditemukan",
+        "jenis": "Tidak diketahui"
+    })
 
-# Fungsi hitung massa molekul relatif
 def hitung_massa_molekul(rumus):
-    import re
-    pattern = r"([A-Z][a-z]?)(\d*)"
+    def parse_rumus(rumus):
+        pattern = r'([A-Z][a-z]?)(\d*)'
+        return re.findall(pattern, rumus)
+
     total = 0
     try:
-        for simbol, jumlah in re.findall(pattern, rumus):
+        for simbol, jumlah in parse_rumus(rumus):
             jumlah = int(jumlah) if jumlah else 1
-            ar = massa_atom_relatif.get(simbol, 0)
-            total += ar * jumlah
+            total += massa_atom.get(simbol, 0) * jumlah
         return total
-    except Exception:
+    except:
         return None
+

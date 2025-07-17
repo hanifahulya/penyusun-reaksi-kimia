@@ -73,7 +73,6 @@ reaksi_tunggal = {
     frozenset(["Zn", "Br"]): "Zn + Br_2 \\rightarrow ZnBr_2",
     frozenset(["Sn", "I"]): "Sn + I_2 \\rightarrow SnI_2"
 }
-}
 
 reaction_rules = {}
 for k, v in reaksi_tunggal.items():

@@ -4,18 +4,18 @@ from periodic_table_ui import tampilkan_tabel_periodik
 from utils.tabel_periodik_118 import elemen_periodik
 
 st.set_page_config(page_title="Penyusun Persamaan Reaksi", layout="wide")
-st.title("\ud83d\udd2c Penyusun Persamaan Reaksi Kimia")
+st.title("Penyusun Persamaan Reaksi Kimia")
 
 if "selected_elements" not in st.session_state:
     st.session_state.selected_elements = []
 
 golongan_tersedia = list({elemen.get("golongan", "lainnya") for baris in elemen_periodik for elemen in baris if elemen.get("simbol")})
 golongan_tersedia.sort()
-gol_filter = st.selectbox("\ud83d\udd0d Filter Unsur berdasarkan Golongan", ["Semua"] + golongan_tersedia)
+gol_filter = st.selectbox("Filter Unsur berdasarkan Golongan", ["Semua"] + golongan_tersedia)
 
 tampilkan_tabel_periodik(filter_golongan=gol_filter if gol_filter != "Semua" else None)
 
-if st.button("\ud83d\udd01 Reset Pilihan Unsur"):
+if st.button("Reset Pilihan Unsur"):
     st.session_state.selected_elements = []
 
 unsur_terpilih = st.session_state.get("selected_elements", [])

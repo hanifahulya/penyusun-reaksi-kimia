@@ -40,6 +40,56 @@ reaksi_opsional = {
     frozenset(["Pb", "Cl"]): [
         ("PbCl_2", "Pb + Cl_2 \\rightarrow PbCl_2"),
         ("PbCl_4", "Pb + 2Cl_2 \\rightarrow PbCl_4")
+    ],
+    frozenset(["Cl", "Mn"]): [
+    ("MnCl_2", "Mn + Cl_2 \\rightarrow MnCl_2"),
+    ("MnCl_3", "2Mn + 3Cl_2 \\rightarrow 2MnCl_3")
+    ],
+    
+    frozenset(["Cl", "Sb"]): [
+        ("SbCl_3", "2Sb + 3Cl_2 \\rightarrow 2SbCl_3"),
+        ("SbCl_5", "2Sb + 5Cl_2 \\rightarrow 2SbCl_5")
+    ],
+    
+    frozenset(["Br", "P"]): [
+        ("PBr_3", "2P + 3Br_2 \\rightarrow 2PBr_3"),
+        ("PBr_5", "2P + 5Br_2 \\rightarrow 2PBr_5")
+    ],
+    
+    frozenset(["I", "P"]): [
+        ("PI_3", "2P + 3I_2 \\rightarrow 2PI_3"),
+        ("PI_5", "2P + 5I_2 \\rightarrow 2PI_5")
+    ],
+    
+    frozenset(["Cl", "As"]): [
+        ("AsCl_3", "2As + 3Cl_2 \\rightarrow 2AsCl_3"),
+        ("AsCl_5", "2As + 5Cl_2 \\rightarrow 2AsCl_5")
+    ],
+    
+    frozenset(["N", "H"]): [
+        ("NH_3", "N_2 + 3H_2 \\rightarrow 2NH_3"),
+        ("N_2H_4", "N_2 + 2H_2 \\rightarrow N_2H_4")
+    ],
+    
+    frozenset(["C", "H"]): [
+        ("CH_4", "C + 2H_2 \\rightarrow CH_4"),
+        ("C_2H_6", "2C + 3H_2 \\rightarrow C_2H_6")
+    ],
+    
+    frozenset(["Cu", "O"]): [
+        ("CuO", "2Cu + O_2 \\rightarrow 2CuO"),
+        ("Cu_2O", "4Cu + O_2 \\rightarrow 2Cu_2O")
+    ],
+    
+    frozenset(["Fe", "O"]): [
+        ("FeO", "2Fe + O_2 \\rightarrow 2FeO"),
+        ("Fe_2O_3", "4Fe + 3O_2 \\rightarrow 2Fe_2O_3"),
+        ("Fe_3O_4", "3Fe + 2O_2 \\rightarrow Fe_3O_4")
+    ],
+    
+    frozenset(["Sn", "O"]): [
+        ("SnO", "2Sn + O_2 \\rightarrow 2SnO"),
+        ("SnO_2", "Sn + O_2 \\rightarrow SnO_2")
     ]
 }
 

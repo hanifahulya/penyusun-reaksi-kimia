@@ -1,6 +1,20 @@
 import streamlit as st
 from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
 
+warna_golongan = {
+    "logam alkali": "#FFB3BA",
+    "logam alkali tanah": "#FFDFBA",
+    "logam transisi": "#FFFFBA",
+    "logam pasca transisi": "#FFE4B5",
+    "metaloid": "#BAFFC9",
+    "nonlogam": "#BAE1FF",
+    "halogen": "#D5BAFF",
+    "gas mulia": "#FFBAED",
+    "lanthanida": "#C2F0FC",
+    "aktinida": "#E6CCFF",
+    "lainnya": "#E0E0E0"
+}
+
 def tampilkan_tabel_periodik(filter_golongan=None):
     for baris in elemen_periodik:
         kolom = st.columns(len(baris))

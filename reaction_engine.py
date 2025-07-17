@@ -185,7 +185,25 @@ reaksi_tunggal = {
     frozenset(["Sb", "Cl"]): "2Sb + 3Cl_2 \\rightarrow 2SbCl_3",
     frozenset(["P", "O"]): "4P + 5O_2 \\rightarrow 2P_2O_5",
     frozenset(["C", "S"]): "C + S \\rightarrow CS",
-    frozenset(["S", "O"]): "S + O_2 \\rightarrow SO_2"
+    frozenset(["S", "O"]): "S + O_2 \\rightarrow SO_2",
+    frozenset(["Co", "O"]): "2Co + O_2 \\rightarrow 2CoO",
+    frozenset(["Ni", "Cl"]): "Ni + Cl_2 \\rightarrow NiCl_2",
+    frozenset(["Zn", "O"]): "2Zn + O_2 \\rightarrow 2ZnO",
+    frozenset(["Y", "Cl"]): "2Y + 3Cl_2 \\rightarrow 2YCl_3",
+    frozenset(["Zr", "O"]): "2Zr + O_2 \\rightarrow 2ZrO_2",
+    frozenset(["Nb", "Cl"]): "2Nb + 5Cl_2 \\rightarrow 2NbCl_5",
+    frozenset(["Mo", "O"]): "2Mo + 3O_2 \\rightarrow 2MoO_3",
+    frozenset(["Ag", "O"]): "4Ag + O_2 \\rightarrow 2Ag_2O",
+    frozenset(["Cd", "Cl"]): "Cd + Cl_2 \\rightarrow CdCl_2",
+    frozenset(["W", "O"]): "2W + 3O_2 \\rightarrow 2WO_3",
+    frozenset(["Pt", "Cl"]): "Pt + Cl_2 \\rightarrow PtCl_2",
+    frozenset(["Au", "Cl"]): "2Au + 3Cl_2 \\rightarrow 2AuCl_3",
+    frozenset(["Hg", "Cl"]): "Hg + Cl_2 \\rightarrow HgCl_2",
+    frozenset(["Sc", "O"]): "4Sc + 3O_2 \\rightarrow 2Sc_2O_3",
+    frozenset(["La", "Cl"]): "2La + 3Cl_2 \\rightarrow 2LaCl_3",
+    frozenset(["Ce", "O"]): "4Ce + 3O_2 \\rightarrow 2Ce_2O_3",
+    frozenset(["Th", "Cl"]): "Th + 2Cl_2 \\rightarrow ThCl_4",
+    frozenset(["U", "O"]): "U + O_2 \\rightarrow UO_2"
 }
 
 reaction_rules = {}

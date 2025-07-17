@@ -71,7 +71,20 @@ reaksi_tunggal = {
     frozenset(["H", "Br"]): "H_2 + Br_2 \\rightarrow 2HBr",
     frozenset(["H", "I"]): "H_2 + I_2 \\rightarrow 2HI",
     frozenset(["Zn", "Br"]): "Zn + Br_2 \\rightarrow ZnBr_2",
-    frozenset(["Sn", "I"]): "Sn + I_2 \\rightarrow SnI_2"
+    frozenset(["Sn", "I"]): "Sn + I_2 \\rightarrow SnI_2",
+    frozenset(["Ti", "Cl"]): "Ti + 2Cl_2 \\rightarrow TiCl_4",
+    frozenset(["V", "O"]): "4V + 5O_2 \\rightarrow 2V_2O_5",
+    frozenset(["Cr", "Cl"]): "2Cr + 3Cl_2 \\rightarrow 2CrCl_3",
+    frozenset(["Mn", "O"]): "2Mn + O_2 \\rightarrow 2MnO",
+    frozenset(["Co", "Cl"]): "Co + Cl_2 \\rightarrow CoCl_2",
+    frozenset(["Ni", "O"]): "2Ni + O_2 \\rightarrow 2NiO",
+    frozenset(["Pb", "Br"]): "Pb + Br_2 \\rightarrow PbBr_2",
+    frozenset(["Fe", "O"]): "4Fe + 3O_2 \\rightarrow 2Fe_2O_3",
+    frozenset(["Sn", "O"]): "2Sn + O_2 \\rightarrow 2SnO",
+    frozenset(["Sb", "Cl"]): "2Sb + 3Cl_2 \\rightarrow 2SbCl_3",
+    frozenset(["P", "O"]): "4P + 5O_2 \\rightarrow 2P_2O_5",
+    frozenset(["C", "S"]): "C + S \\rightarrow CS",
+    frozenset(["S", "O"]): "S + O_2 \\rightarrow SO_2"
 }
 
 reaction_rules = {}

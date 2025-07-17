@@ -1,7 +1,6 @@
 import streamlit as st
 from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
 
-# Warna golongan
 warna_golongan = {
     "logam alkali": "#FFB3BA",
     "logam alkali tanah": "#FFDFBA",
@@ -16,14 +15,15 @@ warna_golongan = {
     "lainnya": "#E0E0E0"
 }
 
-def tampilkan_tabel_periodik():
+def tampilkan_tabel_periodik(filter_golongan=None):
     for baris in elemen_periodik:
         kolom = st.columns(len(baris))
         for i, elemen in enumerate(baris):
             simbol = elemen.get("simbol", "")
             golongan = elemen.get("golongan", "lainnya")
             warna = warna_golongan.get(golongan, "#E0E0E0")
-            if simbol:
+
+            if simbol and (filter_golongan is None or golongan == filter_golongan):
                 Ar = Ar_tiap_unsur.get(simbol, "")
                 label = f"{simbol}"
                 tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol
@@ -33,4 +33,4 @@ def tampilkan_tabel_periodik():
                     if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
                         st.session_state.selected_elements.append(simbol)
             else:
-                kolom[i].markdown(" ")  
+                kolom[i].markdown(" ")

@@ -1,15 +1,29 @@
-def tampilkan_tabel_periodik():
-    max_kolom = 18  # jumlah kolom tetap
-    for baris in elemen_periodik:
-        while len(baris) < max_kolom:
-            baris.append({})
+import streamlit as st
+from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
 
-        kolom = st.columns(max_kolom)
+warna_golongan = {
+    "logam alkali": "#FFB3BA",
+    "logam alkali tanah": "#FFDFBA",
+    "logam transisi": "#FFFFBA",
+    "logam pasca transisi": "#FFE4B5",
+    "metaloid": "#BAFFC9",
+    "nonlogam": "#BAE1FF",
+    "halogen": "#D5BAFF",
+    "gas mulia": "#FFBAED",
+    "lanthanida": "#C2F0FC",
+    "aktinida": "#E6CCFF",
+    "lainnya": "#E0E0E0"
+}
+
+def tampilkan_tabel_periodik(filter_golongan=None):
+    for baris in elemen_periodik:
+        kolom = st.columns(len(baris))
         for i, elemen in enumerate(baris):
             simbol = elemen.get("simbol", "")
             golongan = elemen.get("golongan", "lainnya")
             warna = warna_golongan.get(golongan, "#E0E0E0")
-            if simbol:
+
+            if simbol and (filter_golongan is None or golongan == filter_golongan):
                 Ar = Ar_tiap_unsur.get(simbol, "")
                 label = f"{simbol}"
                 tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol

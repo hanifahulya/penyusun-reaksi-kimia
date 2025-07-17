@@ -163,3 +163,5 @@ elemen_periodik = [
       {"simbol": "Ts", "golongan": "halogen"},
       {"simbol": "Og", "golongan": "gas mulia"}]
 ]
+
+Ar_tiap_unsur = massa_atom

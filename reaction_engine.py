@@ -42,6 +42,7 @@ reaksi_opsional = {
         ("PbCl_4", "Pb + 2Cl_2 \\rightarrow PbCl_4")
     ]
 }
+}
 
 reaksi_tunggal = {
     frozenset(["H", "O"]): "2H_2 + O_2 \\rightarrow 2H_2O",
@@ -72,7 +73,6 @@ reaksi_tunggal = {
     frozenset(["H", "I"]): "H_2 + I_2 \\rightarrow 2HI",
     frozenset(["Zn", "Br"]): "Zn + Br_2 \\rightarrow ZnBr_2",
     frozenset(["Sn", "I"]): "Sn + I_2 \\rightarrow SnI_2"
-}
 }
 
 reaction_rules = {}

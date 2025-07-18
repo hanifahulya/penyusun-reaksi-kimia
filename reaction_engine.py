@@ -274,7 +274,10 @@ reaksi_tunggal = {
     frozenset(["Yb", "Cl"]): "2Yb + 3Cl_2 \\rightarrow 2YbCl_3",
     frozenset(["Th", "O"]): "4Th + 3O_2 \\rightarrow 2Th_2O_3",
     frozenset(["U", "Cl"]): "U + 3Cl_2 \\rightarrow UCl_6",
-    frozenset(["Cl", "O"]): "2Cl + O \\rightarrow Cl_2O"
+    frozenset(["Cl", "O"]): "2Cl + O \\rightarrow Cl_2O",
+    frozenset(["Sr", "O"]): "2Sr + O_2 \\rightarrow 2SrO",
+    frozenset(["Li", "O"]): "4Li + O_2 \\rightarrow 2Li_2O",
+     frozenset(["Mg", "S"]): "Mg + S \\rightarrow MgS"
 
 }
 

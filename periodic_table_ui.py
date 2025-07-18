@@ -15,15 +15,19 @@ warna_golongan = {
     "lainnya": "#E0E0E0"
 }
 
-def tampilkan_tabel_periodik(filter_golongan=None):
+def tampilkan_tabel_periodik():
+    max_kolom = 18
     for baris in elemen_periodik:
-        kolom = st.columns(len(baris))
+        while len(baris) < max_kolom:
+            baris.append({})  # Tambah elemen kosong
+
+        kolom = st.columns(max_kolom)
         for i, elemen in enumerate(baris):
             simbol = elemen.get("simbol", "")
             golongan = elemen.get("golongan", "lainnya")
             warna = warna_golongan.get(golongan, "#E0E0E0")
 
-            if simbol and (filter_golongan is None or golongan == filter_golongan):
+            if simbol:
                 Ar = Ar_tiap_unsur.get(simbol, "")
                 label = f"{simbol}"
                 tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol

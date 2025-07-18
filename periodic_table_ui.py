@@ -15,16 +15,21 @@ warna_golongan = {
     "lainnya": "#E0E0E0"
 }
 
-def tampilkan_tabel_periodik():
+def tampilkan_tabel_periodik(filter_golongan=None):
     max_kolom = 18
     for baris in elemen_periodik:
         while len(baris) < max_kolom:
-            baris.append({})  # Tambah elemen kosong
+            baris.append({})
 
         kolom = st.columns(max_kolom)
         for i, elemen in enumerate(baris):
             simbol = elemen.get("simbol", "")
             golongan = elemen.get("golongan", "lainnya")
+
+            # ⛔ Lewati jika filter dipilih dan golongan tidak cocok
+            if filter_golongan and golongan != filter_golongan:
+                continue
+
             warna = warna_golongan.get(golongan, "#E0E0E0")
 
             if simbol:

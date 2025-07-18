@@ -1,45 +1,36 @@
 import streamlit as st
-from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
+from periodic_table_ui import tampilkan_tabel_periodik
+from reaction_engine import susun_reaksi_dari_unsur, hitung_massa_molekul
+from utils.tabel_periodik_118 import massa_atom, elemen_periodik
 
-warna_golongan = {
-    "logam alkali": "#FFB3BA",
-    "logam alkali tanah": "#FFDFBA",
-    "logam transisi": "#FFFFBA",
-    "logam pasca transisi": "#FFE4B5",
-    "metaloid": "#BAFFC9",
-    "nonlogam": "#BAE1FF",
-    "halogen": "#D5BAFF",
-    "gas mulia": "#FFBAED",
-    "lanthanida": "#C2F0FC",
-    "aktinida": "#E6CCFF",
-    "lainnya": "#E0E0E0"
-}
+st.set_page_config(page_title="Penyusun Reaksi Kimia", layout="wide")
 
-def tampilkan_tabel_periodik(filter_golongan=None):
-    max_kolom = 18
-    for baris in elemen_periodik:
-        while len(baris) < max_kolom:
-            baris.append({})
+st.title("🧪 Penyusun Persamaan Reaksi Kimia")
 
-        kolom = st.columns(max_kolom)
-        for i, elemen in enumerate(baris):
-            simbol = elemen.get("simbol", "")
-            golongan = elemen.get("golongan", "lainnya")
+st.markdown("### Filter Unsur berdasarkan Golongan")
+golongan_opsi = [
+    "Semua", "alkali", "alkali tanah", "logam transisi", "metaloid", "nonlogam",
+    "halogen", "gas mulia", "lantanida", "aktinida"
+]
+gol_filter = st.selectbox("Filter Unsur berdasarkan Golongan", golongan_opsi)
 
-            # ⛔ Lewati jika filter dipilih dan golongan tidak cocok
-            if filter_golongan and golongan != filter_golongan:
-                continue
+# tampilkan tabel periodik dengan filter golongan jika dipilih
+tampilkan_tabel_periodik(filter_golongan=None if gol_filter == "Semua" else gol_filter)
 
-            warna = warna_golongan.get(golongan, "#E0E0E0")
+st.markdown("---")
+st.markdown("### Persamaan Reaksi:")
 
-            if simbol:
-                Ar = Ar_tiap_unsur.get(simbol, "")
-                label = f"{simbol}"
-                tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol
-                if kolom[i].button(label, help=tooltip, key=f"{simbol}_{i}", use_container_width=True):
-                    if "selected_elements" not in st.session_state:
-                        st.session_state.selected_elements = []
-                    if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
-                        st.session_state.selected_elements.append(simbol)
-            else:
-                kolom[i].markdown(" ")
+# Tampilkan hasil reaksi jika ada 2 unsur dipilih
+if "selected_elements" in st.session_state and len(st.session_state.selected_elements) == 2:
+    unsur1, unsur2 = st.session_state.selected_elements
+    persamaan, jenis_reaksi = susun_reaksi_dari_unsur(unsur1, unsur2)
+    st.latex(persamaan)
+    st.success(f"Jenis Reaksi: {jenis_reaksi}")
+
+    massa = hitung_massa_molekul(persamaan, massa_atom)
+    st.info(f"Massa Molekul Relatif (Mr) dari produk: {massa}")
+
+    if st.button("Reset Pilihan Unsur"):
+        st.session_state.selected_elements = []
+else:
+    st.warning("Pilih dua unsur dari tabel periodik untuk menyusun reaksi.")

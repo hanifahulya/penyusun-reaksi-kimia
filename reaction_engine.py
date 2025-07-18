@@ -278,7 +278,9 @@ reaksi_tunggal = {
     frozenset(["Sr", "O"]): "2Sr + O_2 \\rightarrow 2SrO",
     frozenset(["Li", "O"]): "4Li + O_2 \\rightarrow 2Li_2O",
     frozenset(["Mg", "S"]): "Mg + S \\rightarrow MgS",
-    frozenset(["Na", "S"]): "2Na + S \\rightarrow Na_2S"
+    frozenset(["Na", "S"]): "2Na + S \\rightarrow Na_2S",
+    frozenset(["Mg", "N"]): "3Mg + 2N_2 \\rightarrow Mg_2N_2",
+    frozenset(["Zn", "S"]): "Zn + S \\rightarrow ZnS"
 
 }
 

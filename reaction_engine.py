@@ -141,7 +141,58 @@ reaksi_opsional = {
     frozenset(["Sb", "I"]): [
         ("SbI_3", "2Sb + 3I_2 \\rightarrow 2SbI_3"),
         ("SbI_5", "2Sb + 5I_2 \\rightarrow 2SbI_5")
+    ],
+    
+    frozenset(["Co", "O"]): [
+    ("CoO", "2Co + O_2 \\rightarrow 2CoO"),
+    ("Co_2O_3", "4Co + 3O_2 \\rightarrow 2Co_2O_3")
+    ],
+    
+    frozenset(["Ni", "O"]): [
+        ("NiO", "2Ni + O_2 \\rightarrow 2NiO"),
+        ("Ni_2O_3", "4Ni + 3O_2 \\rightarrow 2Ni_2O_3")
+    ],
+    
+    frozenset(["Cr", "Cl"]): [
+        ("CrCl_2", "Cr + Cl_2 \\rightarrow CrCl_2"),
+        ("CrCl_3", "2Cr + 3Cl_2 \\rightarrow 2CrCl_3")
+    ],
+    
+    frozenset(["Ti", "Cl"]): [
+        ("TiCl_2", "Ti + Cl_2 \\rightarrow TiCl_2"),
+        ("TiCl_4", "Ti + 2Cl_2 \\rightarrow TiCl_4")
+    ],
+    
+    frozenset(["U", "O"]): [
+        ("UO_2", "U + O_2 \\rightarrow UO_2"),
+        ("UO_3", "2U + 3O_2 \\rightarrow 2UO_3")
+    ],
+    
+    frozenset(["Mo", "Cl"]): [
+        ("MoCl_3", "2Mo + 3Cl_2 \\rightarrow 2MoCl_3"),
+        ("MoCl_5", "2Mo + 5Cl_2 \\rightarrow 2MoCl_5")
+    ],
+    
+    frozenset(["W", "Cl"]): [
+        ("WCl_4", "W + 2Cl_2 \\rightarrow WCl_4"),
+        ("WCl_6", "W + 3Cl_2 \\rightarrow WCl_6")
+    ],
+    
+    frozenset(["V", "O"]): [
+        ("VO", "2V + O_2 \\rightarrow 2VO"),
+        ("V_2O_5", "4V + 5O_2 \\rightarrow 2V_2O_5")
+    ],
+    
+    frozenset(["Ce", "O"]): [
+        ("CeO_2", "Ce + O_2 \\rightarrow CeO_2"),
+        ("Ce_2O_3", "4Ce + 3O_2 \\rightarrow 2Ce_2O_3")
+    ],
+    
+    frozenset(["Pr", "O"]): [
+        ("PrO_2", "Pr + O_2 \\rightarrow PrO_2"),
+        ("Pr_6O_11", "4Pr + 3O_2 \\rightarrow Pr_6O_11")
     ]
+
 }
 
 reaksi_tunggal = {
@@ -178,7 +229,6 @@ reaksi_tunggal = {
     frozenset(["Cr", "Cl"]): "2Cr + 3Cl_2 \\rightarrow 2CrCl_3",
     frozenset(["Mn", "O"]): "2Mn + O_2 \\rightarrow 2MnO",
     frozenset(["Co", "Cl"]): "Co + Cl_2 \\rightarrow CoCl_2",
-    frozenset(["Ni", "O"]): "2Ni + O_2 \\rightarrow 2NiO",
     frozenset(["Pb", "Br"]): "Pb + Br_2 \\rightarrow PbBr_2",
     frozenset(["Fe", "O"]): "4Fe + 3O_2 \\rightarrow 2Fe_2O_3",
     frozenset(["Sn", "O"]): "2Sn + O_2 \\rightarrow 2SnO",
@@ -186,7 +236,6 @@ reaksi_tunggal = {
     frozenset(["P", "O"]): "4P + 5O_2 \\rightarrow 2P_2O_5",
     frozenset(["C", "S"]): "C + S \\rightarrow CS",
     frozenset(["S", "O"]): "S + O_2 \\rightarrow SO_2",
-    frozenset(["Co", "O"]): "2Co + O_2 \\rightarrow 2CoO",
     frozenset(["Ni", "Cl"]): "Ni + Cl_2 \\rightarrow NiCl_2",
     frozenset(["Zn", "O"]): "2Zn + O_2 \\rightarrow 2ZnO",
     frozenset(["Y", "Cl"]): "2Y + 3Cl_2 \\rightarrow 2YCl_3",
@@ -203,7 +252,29 @@ reaksi_tunggal = {
     frozenset(["La", "Cl"]): "2La + 3Cl_2 \\rightarrow 2LaCl_3",
     frozenset(["Ce", "O"]): "4Ce + 3O_2 \\rightarrow 2Ce_2O_3",
     frozenset(["Th", "Cl"]): "Th + 2Cl_2 \\rightarrow ThCl_4",
-    frozenset(["U", "O"]): "U + O_2 \\rightarrow UO_2"
+    frozenset(["U", "O"]): "U + O_2 \\rightarrow UO_2",
+    frozenset(["Cr", "O"]): "4Cr + 3O_2 \\rightarrow 2Cr_2O_3",
+    frozenset(["V", "Cl"]): "2V + 3Cl_2 \\rightarrow 2VCl_3",
+    frozenset(["Ti", "O"]): "2Ti + O_2 \\rightarrow 2TiO",
+    frozenset(["Nb", "O"]): "4Nb + 5O_2 \\rightarrow 2Nb_2O_5",
+    frozenset(["Ru", "Cl"]): "2Ru + 3Cl_2 \\rightarrow 2RuCl_3",
+    frozenset(["Rh", "Cl"]): "2Rh + 3Cl_2 \\rightarrow 2RhCl_3",
+    frozenset(["Pd", "Cl"]): "Pd + Cl_2 \\rightarrow PdCl_2",
+    frozenset(["In", "Cl"]): "2In + 3Cl_2 \\rightarrow 2InCl_3",
+    frozenset(["Tl", "Cl"]): "2Tl + Cl_2 \\rightarrow 2TlCl",
+    frozenset(["Ga", "Cl"]): "2Ga + 3Cl_2 \\rightarrow 2GaCl_3",
+    frozenset(["Ge", "Cl"]): "Ge + Cl_2 \\rightarrow GeCl_2",
+    frozenset(["Te", "Cl"]): "Te + Cl_2 \\rightarrow TeCl_2",
+    frozenset(["Nd", "Cl"]): "2Nd + 3Cl_2 \\rightarrow 2NdCl_3",
+    frozenset(["Sm", "Cl"]): "2Sm + 3Cl_2 \\rightarrow 2SmCl_3",
+    frozenset(["Gd", "Cl"]): "2Gd + 3Cl_2 \\rightarrow 2GdCl_3",
+    frozenset(["Dy", "Cl"]): "2Dy + 3Cl_2 \\rightarrow 2DyCl_3",
+    frozenset(["Er", "Cl"]): "2Er + 3Cl_2 \\rightarrow 2ErCl_3",
+    frozenset(["Tm", "Cl"]): "2Tm + 3Cl_2 \\rightarrow 2TmCl_3",
+    frozenset(["Yb", "Cl"]): "2Yb + 3Cl_2 \\rightarrow 2YbCl_3",
+    frozenset(["Th", "O"]): "4Th + 3O_2 \\rightarrow 2Th_2O_3",
+    frozenset(["U", "Cl"]): "U + 3Cl_2 \\rightarrow UCl_6"
+
 }
 
 reaction_rules = {}

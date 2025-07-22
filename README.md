@@ -1,1 +1,0 @@
-# penyusun-reaksi-kimia-2

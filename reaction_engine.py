@@ -1,5 +1,5 @@
 import re
-from utils.tabel_periodik_118 import massa_atom, elemen_periodik
+from utils.tabel_periodik_118 import massa_atom, elemen_periodi
 
 def bersihkan_rumus(rumus_latex):
     return rumus_latex.replace("_", "")

@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as s
 from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
 
 def tampilkan_tabel_periodik(filter_golongan=None):

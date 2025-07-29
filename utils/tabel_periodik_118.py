@@ -152,4 +152,3 @@ elemen_periodik = [
 ]
 
 Ar_tiap_unsur = massa_atom
-

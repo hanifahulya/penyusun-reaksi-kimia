@@ -17,4 +17,4 @@ if halaman == 'Dasar Teori':
     jenis reaksi, serta massa molekul (BM) dari senyawa hasil reaksi.
     """)
 else:
-    tampilkan_tabel_periodik(elemen_periodik)
+    tampilkan_tabel_periodik()

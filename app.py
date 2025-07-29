@@ -1,5 +1,5 @@
 import streamlit as st
-from reaction_engine import susun_reaksi_dari_unsur, hitung_massa_molekul
+from reaction_engine.main import susun_reaksi_dari_unsur, hitung_massa_molekul
 from periodic_table_ui.tabel import tampilkan_tabel_periodik
 from utils.tabel_periodik_118 import elemen_periodik
 

@@ -1,6 +1,3 @@
-reaksi_opsional = {}  
-reaksi_tunggal = {}
-
 def susun_reaksi_dari_unsur(unsur):
     return ["Contoh Persamaan"]
 

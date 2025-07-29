@@ -3,8 +3,13 @@ from reaction_engine import susun_reaksi_dari_unsur, hitung_massa_molekul
 from periodic_table_ui import tampilkan_tabel_periodik
 from utils.tabel_periodik_118 import elemen_periodik
 
-st.set_page_config(page_title="Penyusun Persamaan Reaksi", layout="wide")
-st.title("Penyusun Persamaan Reaksi Kimia")
+st.set_page_config(page_title='Penyusun Persamaan Reaksi', layout='wide')
+
+st.sidebar.title('Navigasi')
+halaman = st.sidebar.radio('Pilih Halaman', ['Beranda', 'Dasar Teori'])
+
+if halaman == 'Beranda':
+"Penyusun Persamaan Reaksi Kimia")
 
 if "selected_elements" not in st.session_state:
     st.session_state.selected_elements = []
@@ -45,3 +50,17 @@ if hasil:
             mr = hitung_massa_molekul(produk_akhir)
             if mr:
                 st.info(f"Massa molekul relatif (Mr) dari {produk_latex}: {mr:.2f}")
+
+elif halaman == "Dasar Teori":
+    st.header("📚 Dasar Teori")
+    st.markdown("""
+**Reaksi kimia** adalah proses di mana satu atau lebih zat (reaktan) diubah menjadi satu atau lebih zat baru (produk). 
+Penyusunan dan penyetaraan persamaan reaksi penting untuk memahami stoikiometri, hukum kekekalan massa, dan konsep dasar kimia lainnya.
+
+### 🔹 Prinsip Penyusunan Reaksi:
+- Memastikan jumlah atom di kiri dan kanan tanda panah reaksi setara.
+- Menggunakan koefisien bilangan bulat terkecil untuk menyetarakan.
+- Berdasarkan reaktivitas dan jenis unsur yang bereaksi.
+
+Aplikasi ini menyederhanakan proses penyusunan reaksi melalui antarmuka visual dan database reaksi yang tersedia.
+""")

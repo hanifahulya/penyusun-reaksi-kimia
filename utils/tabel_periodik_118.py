@@ -151,4 +151,5 @@ elemen_periodik = [
       {"simbol": "Og", "golongan": "gas mulia"}]
 ]
 
-Ar_tiap_unsur = massa_atom
+Ar_tiap_unsur=massa_atom
+

@@ -54,7 +54,7 @@ if halaman == 'Beranda':
 elif halaman == "Dasar Teori":
     st.header("📚 Dasar Teori")
     st.markdown("""
-**Reaksi kimia** adalah proses di mana satu atau lebih zat (reaktan) diubah menjadi satu atau lebih zat baru (produk).
+**Reaksi kimia** adalah proses di mana satu atau lebih zat (reaktan) diubah menjadi satu atau lebih zat baru (produk). 
 Penyusunan dan penyetaraan persamaan reaksi penting untuk memahami stoikiometri, hukum kekekalan massa, dan konsep dasar kimia lainnya.
 
 ### 🔹 Prinsip Penyusunan Reaksi:

@@ -45,3 +45,18 @@ if hasil:
             mr = hitung_massa_molekul(produk_akhir)
             if mr:
                 st.info(f"Massa molekul relatif (Mr) dari {produk_latex}: {mr:.2f}")
+
+
+def halaman_dasar_teori():
+    st.markdown("## 📚 Dasar Teori")
+    st.markdown("""
+    Penyusunan persamaan reaksi kimia merupakan langkah penting dalam memahami konsep stoikiometri dan hukum kekekalan massa. Dalam proses ini, jumlah atom dari masing-masing unsur harus seimbang antara pereaksi dan hasil reaksi. Aplikasi ini membantu proses tersebut dengan cara interaktif dan otomatis menggunakan Python.
+
+    ### Prinsip Dasar Penyusunan Reaksi
+    - Berdasarkan hukum kekekalan massa (Lavoisier): massa zat sebelum dan sesudah reaksi harus sama.
+    - Stoikiometri digunakan untuk menentukan perbandingan koefisien antara pereaksi dan produk.
+    - Informasi massa atom relatif (Ar) digunakan dalam perhitungan massa molekul relatif (Mr).
+
+    Aplikasi ini dirancang untuk membantu menyetarakan reaksi kimia dasar menggunakan antarmuka tabel periodik interaktif.
+    """)
+

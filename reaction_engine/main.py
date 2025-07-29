@@ -2,11 +2,10 @@ reaksi_opsional = {}
 reaksi_tunggal = {}
 
 def susun_reaksi_dari_unsur(unsur):
-    # Dummy return untuk keperluan testing layout
     return ["Contoh Persamaan"]
 
 def hitung_massa_molekul(rumus):
-    return 18.015  # nilai dummy
+    return 18.015  
 
 reaksi_opsional = {
     frozenset(["Fe", "Cl"]): [

@@ -9,7 +9,7 @@ st.sidebar.title('Navigasi')
 halaman = st.sidebar.radio('Pilih Halaman', ['Beranda', 'Dasar Teori'])
 
 if halaman == 'Beranda':
-"Penyusun Persamaan Reaksi Kimia")
+st.title("Penyusun Persamaan Reaksi Kimia")
 
 if "selected_elements" not in st.session_state:
     st.session_state.selected_elements = []

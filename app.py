@@ -4,47 +4,44 @@ from periodic_table_ui import tampilkan_tabel_periodik
 from utils.tabel_periodik_118 import elemen_periodik
 
 st.set_page_config(page_title="Penyusun Persamaan Reaksi", layout="wide")
+st.title("Penyusun Persamaan Reaksi Kimia")
 
-st.sidebar.title("Navigasi")
-halaman = st.sidebar.radio("Pilih Halaman", ["Dasar Teori", "Tabel Periodik"])
+if "selected_elements" not in st.session_state:
+    st.session_state.selected_elements = []
 
-if halaman == "Dasar Teori":
-    st.title("Penyusun Persamaan Reaksi Kimia")
-    st.subheader("Dasar Teori")
-    st.markdown("""
-    Menyusun persamaan reaksi kimia adalah salah satu kompetensi dasar dalam pembelajaran kimia yang bertujuan untuk menggambarkan perubahan zat melalui notasi simbolik. 
-    Dalam menyusun reaksi kimia, penting untuk memperhatikan hukum kekekalan massa yang menyatakan bahwa massa zat sebelum dan sesudah reaksi harus sama. 
-    Oleh karena itu, reaksi harus disetarakan agar jumlah atom dari setiap unsur di kedua sisi persamaan tetap sama.
+golongan_tersedia = list({elemen.get("golongan", "lainnya") for baris in elemen_periodik for elemen in baris if elemen.get("simbol")})
+golongan_tersedia.sort()
+gol_filter = st.selectbox("Filter Unsur berdasarkan Golongan", ["Semua"] + golongan_tersedia)
 
-    Aplikasi ini membantu pengguna dalam menyusun dan menyetarakan persamaan reaksi kimia secara otomatis. Dengan antarmuka interaktif dan data unsur yang lengkap, 
-    pengguna hanya perlu memilih unsur yang bereaksi, dan aplikasi akan menampilkan persamaan reaksi lengkap dengan informasi massa molekul relatif (Mr) dan jenis reaksinya.
-    """)
+tampilkan_tabel_periodik(filter_golongan=gol_filter if gol_filter != "Semua" else None)
 
-elif halaman == "Tabel Periodik":
-    st.title("Penyusun Persamaan Reaksi Kimia")
-    if "selected_elements" not in st.session_state:
-        st.session_state.selected_elements = []
+if st.button("Reset Pilihan Unsur"):
+    st.session_state.selected_elements = []
 
-    golongan_tersedia = list({elemen.get("golongan", "lainnya") for baris in elemen_periodik for elemen in baris if elemen.get("simbol")})
-    golongan_tersedia.sort()
-    gol_filter = st.selectbox("Filter Unsur berdasarkan Golongan", ["Semua"] + golongan_tersedia)
+unsur_terpilih = st.session_state.get("selected_elements", [])
+if len(unsur_terpilih) == 2:
+    hasil = susun_reaksi_dari_unsur(unsur_terpilih)
+else:
+    hasil = None
 
-    tampilkan_tabel_periodik(filter_golongan=gol_filter if gol_filter != "Semua" else None)
+if hasil:
+    if hasil.get("setara") == "Reaksi tidak ditemukan":
+        st.warning("Reaksi antara unsur yang dipilih belum tersedia.")
+    else:
+        st.markdown("### Persamaan Reaksi:")
+        if hasil.get("setara"):
+            st.latex(hasil["setara"])
+        elif hasil.get("setara_opsi"):
+            for opsi in hasil["setara_opsi"]:
+                st.latex(opsi)
 
-    if st.button("Reset Pilihan Unsur"):
-        st.session_state.selected_elements = []
+        if hasil.get("jenis"):
+            st.success(f"Jenis Reaksi: {hasil['jenis']}")
 
-    if len(st.session_state.selected_elements) == 2:
-        unsur1, unsur2 = st.session_state.selected_elements
-        reaksi, jenis_reaksi = susun_reaksi_dari_unsur(unsur1, unsur2)
-        if reaksi:
-            st.markdown("### Persamaan Reaksi")
-            st.latex(reaksi)
+        produk_akhir = hasil.get("produk") or (hasil.get("produk_opsional") or [None])[0]
+        produk_latex = hasil.get("produk_latex") or (hasil.get("produk_latex_opsi") or [None])[0]
 
-            Mr1 = hitung_massa_molekul(unsur1)
-            Mr2 = hitung_massa_molekul(unsur2)
-            st.markdown(f"**Mr {unsur1}** = {Mr1}")
-            st.markdown(f"**Mr {unsur2}** = {Mr2}")
-            st.markdown(f"**Jenis Reaksi**: {jenis_reaksi}")
-        else:
-            st.warning("Reaksi tidak tersedia dalam basis data.")
+        if produk_akhir and produk_akhir != "Tidak diketahui":
+            mr = hitung_massa_molekul(produk_akhir)
+            if mr:
+                st.info(f"Massa molekul relatif (Mr) dari {produk_latex}: {mr:.2f}")

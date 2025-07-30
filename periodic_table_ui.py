@@ -1,3 +1,4 @@
+
 import streamlit as st
 from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
 
@@ -28,25 +29,10 @@ def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
 
                 tombol_id = f"{simbol}_{i}"
 
-                tombol_html = f"""
-                <button style="background-color:{warna};
-                               width:100%;
-                               height:40px;
-                               border:none;
-                               border-radius:6px;
-                               cursor:pointer;
-                               font-weight:bold;"
-                        onClick="fetch('/_stcore/{tombol_id}')">
-                    {simbol}
-                </button>
-                """
-
                 if kolom[i].button(simbol, key=tombol_id, help=tooltip, use_container_width=True):
                     if "selected_elements" not in st.session_state:
                         st.session_state.selected_elements = []
                     if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
                         st.session_state.selected_elements.append(simbol)
-                else:
-                    kolom[i].markdown(tombol_html, unsafe_allow_html=True)
             else:
                 kolom[i].markdown(" ")

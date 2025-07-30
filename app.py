@@ -10,8 +10,26 @@ halaman = st.sidebar.selectbox("Navigasi", ["Dasar Teori", "Tabel Periodik"])
 if halaman == "Dasar Teori":
     st.title("🧪 Penyusun Persamaan Reaksi Kimia")
     st.markdown("""
-    Aplikasi ini membantu menyusun persamaan reaksi kimia secara otomatis.  
-    Klik dua unsur dari tabel periodik untuk melihat reaksi yang terjadi.  
+    Persamaan reaksi kimia merupakan representasi simbolik dari reaksi kimia dengan menyatakan reaktan dan produk yang terlibat. 
+    Persamaan reaksi kimia menyatakan secara simbolik reaksi kimia dengan menggunakan rumus kimia dari zat-zat yang terlibat. Agar sah secara hukum kekekalan massa, persamaan ini harus setara, yaitu jumlah atom untuk setiap unsur harus sama di kedua sisi reaksi.
+
+    ⚛️ **Contoh Persamaan Setara:**
+    \[ 2H_2 + O_2 \\rightarrow 2H_2O \]
+
+    Jenis reaksi kimia umum meliputi:
+    
+    - Reaksi Kombinasi (Sintesis) 🧩
+    - Reaksi Penguraian (Dekomposisi) ⚡
+    - Reaksi Pergantian Tunggal 🔁
+    - Reaksi Pergantian Ganda 🔄
+    - Reaksi Pembakaran 🔥
+    
+    Aplikasi ini membantu menyusun reaksi antara dua unsur dan menampilkan:
+    - Persamaan reaksi setara
+    - Jenis reaksi ⚗️
+    - Berat molekul (BM) dari senyawa hasil reaksi dalam satuan **g/mol** ⚖️
+    
+    Klik dua unsur dari tabel periodik untuk melihat reaksi yang terjadi. 
     """)
 elif halaman == "Tabel Periodik":
     st.title("🧪 Penyusun Persamaan Reaksi Kimia")

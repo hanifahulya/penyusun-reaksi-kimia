@@ -1,5 +1,5 @@
 import streamlit as st
-from reaction_engine import proses_reaksi
+from reaction_engine import susun_reaksi_dari_unsur, hitung_massa_molekul
 from periodic_table_ui import tampilkan_tabel_periodik
 from utils.tabel_periodik_118 import Ar_tiap_unsur
 
@@ -59,9 +59,30 @@ elif "🧪 Tabel Periodik" in halaman:
         ["Semua"] + sorted(set(e["golongan"] for e in Ar_tiap_unsur.values() if "golongan" in e))
     )
 
-    tampilkan_tabel_periodik(
-        filter_golongan=gol_filter if gol_filter != "Semua" else None
+    hasil = tampilkan_tabel_periodik(
+        filter_golongan=gol_filter if gol_filter != "Semua" else None,
+        klik_unsur=st.session_state.unsur_terpilih
     )
+
+    if hasil:
+        if hasil not in st.session_state.unsur_terpilih:
+            st.session_state.unsur_terpilih.append(hasil)
+
+        if len(st.session_state.unsur_terpilih) > 2:
+            st.session_state.unsur_terpilih.pop(0)
+
+        if len(st.session_state.unsur_terpilih) == 2:
+            reaksi_info = susun_reaksi_dari_unsur(st.session_state.unsur_terpilih)
+            if reaksi_info:
+                st.session_state.hasil_reaksi = reaksi_info["reaksi"]
+                st.session_state.jenis_reaksi = reaksi_info["jenis"]
+                st.session_state.massa_molekul = hitung_massa_molekul(reaksi_info["senyawa"], Ar_tiap_unsur)
+                st.session_state.error = ""
+            else:
+                st.session_state.hasil_reaksi = ""
+                st.session_state.jenis_reaksi = ""
+                st.session_state.massa_molekul = ""
+                st.session_state.error = "Tidak ditemukan reaksi yang cocok untuk kedua unsur tersebut."
 
     if st.session_state.hasil_reaksi:
         st.markdown("---")
@@ -83,12 +104,19 @@ elif "🧮 Reaksi Kimia" in halaman:
     unsur2 = st.selectbox("Pilih Unsur Kedua", sorted(Ar_tiap_unsur.keys()))
 
     if st.button("Susun Reaksi"):
-        hasil = proses_reaksi(unsur1, unsur2)
+        unsur_terpilih = [unsur1, unsur2]
+        reaksi_info = susun_reaksi_dari_unsur(unsur_terpilih)
 
-        st.session_state.hasil_reaksi = hasil.get("reaksi", "")
-        st.session_state.jenis_reaksi = hasil.get("jenis_reaksi", "")
-        st.session_state.massa_molekul = hasil.get("massa_molekul", "")
-        st.session_state.error = hasil.get("error", "")
+        if reaksi_info:
+            st.session_state.hasil_reaksi = reaksi_info["reaksi"]
+            st.session_state.jenis_reaksi = reaksi_info["jenis"]
+            st.session_state.massa_molekul = hitung_massa_molekul(reaksi_info["senyawa"], Ar_tiap_unsur)
+            st.session_state.error = ""
+        else:
+            st.session_state.hasil_reaksi = ""
+            st.session_state.jenis_reaksi = ""
+            st.session_state.massa_molekul = ""
+            st.session_state.error = "Tidak ditemukan reaksi yang cocok untuk kedua unsur tersebut."
 
     if st.session_state.hasil_reaksi:
         st.markdown("---")

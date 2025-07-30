@@ -60,7 +60,7 @@ elif "Tabel Periodik" in halaman:
         produk = hasil.get("produk", hasil.get("produk_opsional", ["?"])[0])
         bm = hitung_massa_molekul(produk)
         if bm:
-            st.info(f"Massa molekul relatif (Mr) dari {produk}: {round(bm, 2)}")
+            st.info(f"Massa molekul relatif (Mr) dari {produk}: {round(bm, 2)} g/mol")
         else:
             st.warning("Tidak ditemukan reaksi yang cocok antara kedua unsur ini.")
         if st.button("🔁 Reset Pilihan"):

@@ -1,131 +1,72 @@
 import streamlit as st
-from reaction_engine import susun_reaksi_dari_unsur_unsur as susun_reaksi_dari_unsur, hitung_massa_molekul
 from periodic_table_ui import tampilkan_tabel_periodik
-from utils.tabel_periodik_118 import Ar_tiap_unsur
+from reaction_engine import susun_reaksi_dari_unsur as susun_reaksi_, hitung_massa_molekul
+from utils.tabel_periodik_118 import elemen_periodik, element_info
 
-st.set_page_config(page_title="Penyusun Persamaan Reaksi Kimia", layout="wide")
+# State
+if "elemen_terpilih" not in st.session_state:
+    st.session_state.elemen_terpilih = []
 
-st.title("⚗️ Penyusun Persamaan Reaksi Kimia")
+def reset_elemen():
+    st.session_state.elemen_terpilih = []
 
-halaman = st.sidebar.radio("Pilih Halaman", ["📚 Dasar Teori", "🧪 Tabel Periodik", "🧮 Reaksi Kimia"])
+# Navigasi halaman
+st.sidebar.markdown("### 📘 Navigasi")
+halaman = st.sidebar.radio("Pilih Halaman", ["Dasar Teori", "Tabel Periodik"])
 
-if "unsur_terpilih" not in st.session_state:
-    st.session_state.unsur_terpilih = []
-
-if "hasil_reaksi" not in st.session_state:
-    st.session_state.hasil_reaksi = ""
-
-if "jenis_reaksi" not in st.session_state:
-    st.session_state.jenis_reaksi = ""
-
-if "massa_molekul" not in st.session_state:
-    st.session_state.massa_molekul = ""
-
-if "error" not in st.session_state:
-    st.session_state.error = ""
-
-# Halaman 1: Dasar Teori
-if "📚 Dasar Teori" in halaman:
-    st.header("📚 Dasar Teori")
+if halaman == "Dasar Teori":
+    st.title("🧪 Penyusun Persamaan Reaksi Kimia")
     st.markdown("""
-    Persamaan reaksi kimia merupakan representasi simbolik dari reaksi kimia dengan menyatakan reaktan dan produk yang terlibat. 
-    Persamaan reaksi kimia menyatakan secara simbolik reaksi kimia dengan menggunakan rumus kimia dari zat-zat yang terlibat. Agar sah secara hukum kekekalan massa, persamaan ini harus setara, yaitu jumlah atom untuk setiap unsur harus sama di kedua sisi reaksi.
+    Aplikasi ini membantu menyusun persamaan reaksi kimia otomatis berdasarkan dua unsur yang kamu pilih.
 
-    ⚛ *Contoh Persamaan Setara:*
-    \[ 2H_2 + O_2 \\rightarrow 2H_2O \]
+    #### 📚 Cara Kerja:
+    1. Pilih dua unsur dari tabel periodik.
+    2. Aplikasi akan menampilkan:
+       - Persamaan reaksi jika tersedia.
+       - Jenis reaksi (tunggal/opsional).
+       - Massa molekul senyawa hasil reaksi.
 
-    Jenis reaksi kimia umum meliputi:
-    
-    - Reaksi Kombinasi (Sintesis) 🧩
-    - Reaksi Penguraian (Dekomposisi) ⚡
-    - Reaksi Pergantian Tunggal 🔁
-    - Reaksi Pergantian Ganda 🔄
-    - Reaksi Pembakaran 🔥
+    #### 🎯 Tujuan:
+    Membantu memahami bagaimana unsur-unsur bereaksi satu sama lain serta menghitung massa molekul hasil reaksi.
 
-    Aplikasi ini membantu menyusun reaksi antara dua unsur dan menampilkan:
-    - Persamaan reaksi setara ⚖
-    - Jenis reaksi ⚗
-    - Berat molekul (BM) dari senyawa hasil reaksi dalam satuan *g/mol* 
-
-    Silakan pilih menu di sebelah kiri untuk memilih 2 unsur yang ingin direaksikan dari tabel periodik.
     """)
+elif halaman == "Tabel Periodik":
+    st.title("🔬 Tabel Periodik Unsur")
 
-# Halaman 2: Tabel Periodik
-elif "🧪 Tabel Periodik" in halaman:
-    st.header("🔬 Tabel Periodik Unsur")
-
+    st.markdown("### Filter Unsur berdasarkan Golongan")
     gol_filter = st.selectbox(
-        "Filter Unsur berdasarkan Golongan",
-        ["Semua"] + sorted(set(e["golongan"] for e in Ar_tiap_unsur.values() if "golongan" in e))
+        "Pilih Golongan",
+        options=["Semua"] + sorted(set(info["golongan"] for info in element_info.values()))
     )
 
-    hasil = tampilkan_tabel_periodik(
-        filter_golongan=gol_filter if gol_filter != "Semua" else None,
-        klik_unsur=st.session_state.unsur_terpilih
+    tampilkan_tabel_periodik(
+        elemen_periodik,
+        info_unsur=element_info,
+        elemen_terpilih=st.session_state.elemen_terpilih,
+        callback=reset_elemen,
+        filter_golongan=gol_filter if gol_filter != "Semua" else None
     )
 
-    if hasil:
-        if hasil not in st.session_state.unsur_terpilih:
-            st.session_state.unsur_terpilih.append(hasil)
+    if len(st.session_state.elemen_terpilih) == 2:
+        unsur1, unsur2 = st.session_state.elemen_terpilih
 
-        if len(st.session_state.unsur_terpilih) > 2:
-            st.session_state.unsur_terpilih.pop(0)
-
-        if len(st.session_state.unsur_terpilih) == 2:
-            reaksi_info = susun_reaksi_dari_unsur(st.session_state.unsur_terpilih)
-            if reaksi_info:
-                st.session_state.hasil_reaksi = reaksi_info["reaksi"]
-                st.session_state.jenis_reaksi = reaksi_info["jenis"]
-                st.session_state.massa_molekul = hitung_massa_molekul(reaksi_info["senyawa"], Ar_tiap_unsur)
-                st.session_state.error = ""
-            else:
-                st.session_state.hasil_reaksi = ""
-                st.session_state.jenis_reaksi = ""
-                st.session_state.massa_molekul = ""
-                st.session_state.error = "Tidak ditemukan reaksi yang cocok untuk kedua unsur tersebut."
-
-    if st.session_state.hasil_reaksi:
         st.markdown("---")
-        st.subheader("Hasil Reaksi:")
-        st.success(st.session_state.hasil_reaksi)
-        st.info(f"Jenis reaksi: {st.session_state.jenis_reaksi}")
-        st.info(f"Massa molekul senyawa: {st.session_state.massa_molekul}")
+        st.subheader("🔁 Hasil Reaksi Kimia")
 
-    elif st.session_state.error:
-        st.markdown("---")
-        st.subheader("Hasil Reaksi:")
-        st.error(st.session_state.error)
+        hasil = susun_reaksi_(unsur1, unsur2)
 
-# Halaman 3: Reaksi Kimia
-elif "🧮 Reaksi Kimia" in halaman:
-    st.header("🧮 Menyusun Reaksi Kimia")
+        if hasil:
+            for hasil_reaksi in hasil:
+                rumus = hasil_reaksi["hasil"]
+                jenis = hasil_reaksi["tipe"]
+                massa = hitung_massa_molekul(rumus)
 
-    unsur1 = st.selectbox("Pilih Unsur Pertama", sorted(Ar_tiap_unsur.keys()))
-    unsur2 = st.selectbox("Pilih Unsur Kedua", sorted(Ar_tiap_unsur.keys()))
-
-    if st.button("Susun Reaksi"):
-        unsur_terpilih = [unsur1, unsur2]
-        reaksi_info = susun_reaksi_dari_unsur(unsur_terpilih)
-
-        if reaksi_info:
-            st.session_state.hasil_reaksi = reaksi_info["reaksi"]
-            st.session_state.jenis_reaksi = reaksi_info["jenis"]
-            st.session_state.massa_molekul = hitung_massa_molekul(reaksi_info["senyawa"], Ar_tiap_unsur)
-            st.session_state.error = ""
+                st.markdown(f"""
+                ✅ **Reaksi {jenis.capitalize()}:**
+                \n**{unsur1} + {unsur2} → {rumus}**
+                \n💠 Massa Molekul: **{massa:.2f} g/mol**
+                """)
         else:
-            st.session_state.hasil_reaksi = ""
-            st.session_state.jenis_reaksi = ""
-            st.session_state.massa_molekul = ""
-            st.session_state.error = "Tidak ditemukan reaksi yang cocok untuk kedua unsur tersebut."
-
-    if st.session_state.hasil_reaksi:
-        st.markdown("---")
-        st.subheader("Hasil Reaksi:")
-        st.success(st.session_state.hasil_reaksi)
-        st.info(f"Jenis reaksi: {st.session_state.jenis_reaksi}")
-        st.info(f"Massa molekul senyawa: {st.session_state.massa_molekul}")
-
-    elif st.session_state.error:
-        st.markdown("---")
-        st.subheader("Hasil Reaksi:")
-        st.error(st.session_state.error)
+            st.warning(f"Tidak ditemukan reaksi antara {unsur1} dan {unsur2}.")
+    else:
+        st.info("Silakan pilih dua unsur untuk melihat hasil reaksi.")

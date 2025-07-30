@@ -28,23 +28,18 @@ if halaman == "Dasar Teori":
 
     #### 🎯 Tujuan:
     Membantu memahami bagaimana unsur-unsur bereaksi satu sama lain serta menghitung massa molekul hasil reaksi.
-
     """)
 elif halaman == "Tabel Periodik":
     st.title("🔬 Tabel Periodik Unsur")
 
-    st.markdown("### Filter Unsur berdasarkan Golongan")
-    gol_filter = st.selectbox(
-        "Pilih Golongan",
-        options=["Semua"] + sorted(set(info["golongan"] for info in element_info.values()))
-    )
+    # Hapus filter golongan untuk mencegah error
+    # Jika kamu ingin menambahkannya lagi nanti, fungsi di periodic_table_ui.py harus menerima argumen itu
 
     tampilkan_tabel_periodik(
         elemen_periodik,
         info_unsur=element_info,
         elemen_terpilih=st.session_state.elemen_terpilih,
-        callback=reset_elemen,
-        filter_golongan=gol_filter if gol_filter != "Semua" else None
+        callback=reset_elemen
     )
 
     if len(st.session_state.elemen_terpilih) == 2:

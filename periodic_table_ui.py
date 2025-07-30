@@ -17,6 +17,9 @@ warna_golongan = {
 }
 
 def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
+    if "selected_elements" not in st.session_state:
+        st.session_state.selected_elements = []
+
     for baris in elemen_periodik:
         kolom = st.columns(len(baris))
         for i, elemen in enumerate(baris):
@@ -27,12 +30,21 @@ def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
                 tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol
                 warna = warna_golongan.get(golongan, "#FFFFFF") if dengan_warna else "#FFFFFF"
 
-                tombol_id = f"{simbol}_{i}"
+                tombol_html = f"""
+                <button style="background-color:{warna};
+                               width:100%;
+                               height:40px;
+                               border:none;
+                               border-radius:6px;
+                               cursor:pointer;
+                               font-weight:bold;"
+                        title="{tooltip}">
+                    {simbol}
+                </button>
+                """
 
-                if kolom[i].button(simbol, key=tombol_id, help=tooltip, use_container_width=True):
-                    if "selected_elements" not in st.session_state:
-                        st.session_state.selected_elements = []
-                    if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
-                        st.session_state.selected_elements.append(simbol)
-            else:
-                kolom[i].markdown(" ")
+                with kolom[i]:
+                    klik = st.button(simbol, key=f"{simbol}_{i}", help=tooltip, use_container_width=True)
+                    if klik and simbol not in st.session_state.selected_elements:
+                        if len(st.session_state.selected_elements) < 2:
+                            st.session_state.selected_elements.append(simbol)

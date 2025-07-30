@@ -1,33 +1,30 @@
 import streamlit as st
-from tabel_periodik_118 import elemen_periodik, warna_golongan
+from utils.tabel_periodik_118 import elemen_periodik, warna_golongan
 
-def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
-    if "selected_elements" not in st.session_state:
-        st.session_state.selected_elements = []
+def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=True):
+    st.markdown("<style>div.stButton > button { width: 3em; height: 3em; }</style>", unsafe_allow_html=True)
 
-    def klik_unsur(symbol):
-        if symbol in st.session_state.selected_elements:
-            st.session_state.selected_elements.remove(symbol)
-        elif len(st.session_state.selected_elements) < 2:
-            st.session_state.selected_elements.append(symbol)
+    selected_elements = st.session_state.get("selected_elements", [])
 
-    last_row = -1
-    for elemen in elemen_periodik:
-        simbol = elemen["simbol"]
-        golongan = elemen["golongan"]
-        row = elemen["baris"]
-        col = elemen["kolom"]
+    grid = [[None for _ in range(18)] for _ in range(10)]
 
-        if filter_golongan and golongan != filter_golongan:
+    for el in elemen_periodik:
+        if filter_golongan and el['golongan'] != filter_golongan:
             continue
+        row, col = el["row"] - 1, el["column"] - 1
+        grid[row][col] = el
 
-        if row != last_row:
-            if last_row != -1:
-                st.write("")
-            cols = st.columns(18)
-            last_row = row
-
-        warna = warna_golongan.get(golongan, "#FFFFFF") if dengan_warna else "#FFFFFF"
-        idx = (col - 1) if 0 < col <= 18 else 0
-        if 0 <= idx < len(cols):
-            cols[idx].button(simbol, key=simbol, on_click=klik_unsur, args=(simbol,), help=golongan, use_container_width=True)
+    for row in grid:
+        cols = st.columns(18)
+        for i, el in enumerate(row):
+            if el:
+                simbol = el["simbol"]
+                warna = warna_golongan.get(el["golongan"], "#FFFFFF") if dengan_warna else "#FFFFFF"
+                if cols[i].button(simbol, key=f"{simbol}_{i}"):
+                    if simbol not in selected_elements:
+                        selected_elements.append(simbol)
+                        if len(selected_elements) > 2:
+                            selected_elements = selected_elements[-2:]
+                    st.session_state.selected_elements = selected_elements
+            else:
+                cols[i].empty()

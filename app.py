@@ -43,7 +43,7 @@ elif halaman == "Tabel Periodik":
     tampilkan_tabel_periodik(
     filter_golongan=gol_filter if gol_filter != "Semua" else None,
     dengan_warna=True
-)
+    )
 
 
     if "selected_elements" in st.session_state and len(st.session_state.selected_elements) == 2:

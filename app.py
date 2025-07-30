@@ -27,9 +27,11 @@ if halaman == "Dasar Teori":
     - Reaksi Pembakaran 🔥
     
     Aplikasi ini membantu menyusun reaksi antara dua unsur dan menampilkan:
-    - Persamaan reaksi setara
+    - Persamaan reaksi setara ⚖️
     - Jenis reaksi ⚗️
-    - Berat molekul (BM) dari senyawa hasil reaksi dalam satuan **g/mol** ⚖️
+    - Berat molekul (BM) dari senyawa hasil reaksi dalam satuan **g/mol** 
+
+    Silahkan pilih menu di sebelah kiri untuk memilih 2 unsur yang  ingin direaksikan dari tabel periodik
     """)
 
 elif halaman == "Tabel Periodik":

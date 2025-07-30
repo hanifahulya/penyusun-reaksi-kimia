@@ -1,9 +1,3 @@
-def susun_reaksi_dari_unsur(unsur):
-    return ["Contoh Persamaan"]
-
-def hitung_massa_molekul(rumus):
-    return 18.015  
-
 reaksi_opsional = {
     frozenset(["Fe", "Cl"]): [
         ("FeCl_2", "Fe + Cl_2 \\rightarrow FeCl_2"),

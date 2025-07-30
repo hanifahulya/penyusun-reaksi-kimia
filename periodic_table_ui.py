@@ -31,7 +31,7 @@ def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
                         st.session_state.selected_elements = []
                     if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
                         st.session_state.selected_elements.append(simbol)
-                elif dengan_warna:
-                    kolom[i].markdown(f"<div style='background-color:{warna}; width:100%; height:35px; border-radius:5px; text-align:center'>{simbol}</div>", unsafe_allow_html=True)
+                # elif dengan_warna:
+                    # kolom[i].markdown(f"<div style='background-color:{warna}; width:100%; height:35px; border-radius:5px; text-align:center'>{simbol}</div>", unsafe_allow_html=True)
             else:
                 kolom[i].markdown(" ")

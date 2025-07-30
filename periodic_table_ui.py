@@ -1,5 +1,6 @@
 import streamlit as st
 from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
+from element_info import element_info
 
 warna_golongan = {
     "logam alkali": "#FFA07A",

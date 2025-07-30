@@ -1,7 +1,7 @@
 import streamlit as st
 from periodic_table_ui import tampilkan_tabel_periodik
 from reaction_engine import susun_reaksi_dari_unsur as susun_reaksi_, hitung_massa_molekul
-from utils.tabel_periodik_118 import elemen_periodik, element_info
+from utils.tabel_periodik_118 import elemen_periodik
 
 # State
 if "elemen_terpilih" not in st.session_state:

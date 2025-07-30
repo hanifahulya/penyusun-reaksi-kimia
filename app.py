@@ -63,5 +63,5 @@ elif "Tabel Periodik" in halaman:
             st.info(f"Massa molekul relatif (Mr) dari {produk}: {round(bm, 2)} g/mol")
         else:
             st.warning("Tidak ditemukan reaksi yang cocok antara kedua unsur ini.")
-        if st.button("🔁 Reset Pilihan"):
+        if st.button("🔁 Reset Pilihan Unsur"):
             st.session_state.selected_elements = []

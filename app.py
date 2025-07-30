@@ -76,7 +76,7 @@ elif "Tentang Aplikasi" in halaman:
     1. Pilih dua unsur dari tabel periodik.
     2. Aplikasi akan menampilkan:
        - Persamaan reaksi jika tersedia.
-       - Jenis reaksi (tunggal/opsional).
+       - Jenis reaksi.
        - Massa molekul senyawa hasil reaksi.
 
     ### 🎯 Tujuan:

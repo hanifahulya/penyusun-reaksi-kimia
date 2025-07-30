@@ -8,7 +8,7 @@ st.set_page_config(page_title="Penyusun Persamaan Reaksi Kimia", layout="wide")
 st.title("🧪 Penyusun Persamaan Reaksi Kimia")
 
 halaman = st.sidebar.markdown("### 📌 Navigasi")
-halaman = st.sidebar.radio("Pilih Halaman", ["📘 Dasar Teori", "🔬 Tabel Periodik"], label_visibility="collapsed")
+halaman = st.sidebar.radio("Pilih Halaman", ["📘 Dasar Teori", "🔬 Tabel Periodik", "ℹ️ Tentang Aplikasi"], label_visibility="collapsed")
 
 if "Dasar Teori" in halaman:
     st.header("📘 Dasar Teori")
@@ -65,3 +65,22 @@ elif "Tabel Periodik" in halaman:
             st.warning("Tidak ditemukan reaksi yang cocok antara kedua unsur ini.")
         if st.button("🔁 Reset Pilihan Unsur"):
             st.session_state.selected_elements = []
+
+elif "Tentang Aplikasi" in halaman:
+    st.header("ℹ️ Tentang Aplikasi")
+
+    st.markdown("""
+    Aplikasi ini dirancang untuk membantu pengguna dalam memahami konsep dasar reaksi kimia secara interaktif. Dengan memilih dua unsur dari tabel periodik, pengguna dapat langsung melihat kemungkinan reaksi yang terjadi, jenis reaksinya, serta menghitung massa molekul hasilnya.
+
+    Fitur ini sangat cocok digunakan untuk pembelajaran kimia dasar, baik untuk siswa, mahasiswa, maupun pengajar yang ingin menyajikan materi secara visual dan mudah dipahami.
+
+    ### 📚 Cara Kerja:
+    1. Pilih dua unsur dari tabel periodik.
+    2. Aplikasi akan menampilkan:
+       - Persamaan reaksi jika tersedia.
+       - Jenis reaksi (tunggal/opsional).
+       - Massa molekul senyawa hasil reaksi.
+
+    ### 🎯 Tujuan:
+    Membantu memahami bagaimana unsur-unsur bereaksi satu sama lain serta menghitung massa molekul hasil reaksi.
+    """)

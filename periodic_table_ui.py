@@ -1,34 +1,37 @@
 import streamlit as st
+from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
 
-def tampilkan_tabel_periodik(elemen_periodik):
-    st.subheader("Filter Unsur berdasarkan Golongan")
-    semua_golongan = sorted(set(e['golongan'] for e in elemen_periodik))
-    pilihan_golongan = st.selectbox("Pilih Golongan", options=["Semua"] + semua_golongan)
+warna_golongan = {
+    "logam alkali": "#FFA07A",
+    "logam alkali tanah": "#F0E68C",
+    "logam transisi": "#90EE90",
+    "logam pasca transisi": "#D8BFD8",
+    "metaloid": "#FFB6C1",
+    "nonlogam": "#87CEFA",
+    "halogen": "#FFDEAD",
+    "gas mulia": "#E0FFFF",
+    "lanthanida": "#E6E6FA",
+    "aktinida": "#FFE4E1",
+    "lainnya": "#FFFFFF"
+}
 
-    filtered = elemen_periodik if pilihan_golongan == "Semua" else [e for e in elemen_periodik if e['golongan'] == pilihan_golongan]
-    kolom = st.columns(18)
-    st.markdown("---")
-
-    if 'terpilih' not in st.session_state:
-        st.session_state.terpilih = []
-
-    for elemen in filtered:
-        idx = elemen['posisi']
-        col = kolom[idx % 18]
-        warna = elemen['warna']
-        if col.button(elemen['simbol'], key=elemen['simbol']):
-            if len(st.session_state.terpilih) < 2:
-                st.session_state.terpilih.append(elemen['simbol'])
+def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
+    for baris in elemen_periodik:
+        kolom = st.columns(len(baris))
+        for i, elemen in enumerate(baris):
+            simbol = elemen.get("simbol", "")
+            golongan = elemen.get("golongan", "lainnya")
+            if simbol and (filter_golongan is None or golongan == filter_golongan):
+                Ar = Ar_tiap_unsur.get(simbol, "")
+                label = f"{simbol}"
+                tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol
+                warna = warna_golongan.get(golongan, "#FFFFFF") if dengan_warna else None
+                if kolom[i].button(label, help=tooltip, key=f"{simbol}_{i}", use_container_width=True):
+                    if "selected_elements" not in st.session_state:
+                        st.session_state.selected_elements = []
+                    if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
+                        st.session_state.selected_elements.append(simbol)
+                elif dengan_warna:
+                    kolom[i].markdown(f"<div style='background-color:{warna}; width:100%; height:35px; border-radius:5px; text-align:center'>{simbol}</div>", unsafe_allow_html=True)
             else:
-                st.session_state.terpilih = [elemen['simbol']]
-
-    if len(st.session_state.terpilih) == 2:
-        from reaction_engine.main import susun_reaksi_dari_unsur, hitung_massa_molekul
-        hasil = susun_reaksi_dari_unsur(st.session_state.terpilih)
-        if hasil:
-            for h in hasil:
-                st.success(f"{h['reaksi']}\nJenis: {h['jenis']}\nBM: {hitung_massa_molekul(h['senyawa'])}")
-        else:
-            st.warning("Reaksi tidak ditemukan.")
-    elif len(st.session_state.terpilih) == 1:
-        st.info(f"Pilih satu unsur lagi.")
+                kolom[i].markdown(" ")

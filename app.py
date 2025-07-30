@@ -72,8 +72,6 @@ elif "Tentang Aplikasi" in halaman:
     st.markdown("""
     Aplikasi ini dirancang untuk membantu pengguna dalam memahami konsep dasar reaksi kimia secara interaktif. Dengan memilih dua unsur dari tabel periodik, pengguna dapat langsung melihat kemungkinan reaksi yang terjadi, jenis reaksinya, serta menghitung massa molekul hasilnya.
 
-    Fitur ini sangat cocok digunakan untuk pembelajaran kimia dasar, baik untuk siswa, mahasiswa, maupun pengajar yang ingin menyajikan materi secara visual dan mudah dipahami.
-
     ### 📚 Cara Kerja:
     1. Pilih dua unsur dari tabel periodik.
     2. Aplikasi akan menampilkan:

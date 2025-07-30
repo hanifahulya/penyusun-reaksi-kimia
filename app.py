@@ -40,8 +40,7 @@ elif halaman == "Tabel Periodik":
                                        "logam pasca transisi", "metaloid", "nonlogam", "halogen", 
                                        "gas mulia", "lanthanida", "aktinida"])
 
-    if simbol and (filter_golongan is None or golongan == filter_golongan):
-    (
+    tampilkan_tabel_periodik(
     filter_golongan=gol_filter if gol_filter != "Semua" else None,
     dengan_warna=True
     )

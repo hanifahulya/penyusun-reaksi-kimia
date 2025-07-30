@@ -19,32 +19,46 @@ warna_golongan = {
 def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
     if "selected_elements" not in st.session_state:
         st.session_state.selected_elements = []
+    if "clicked" not in st.session_state:
+        st.session_state.clicked = None
 
     for baris in elemen_periodik:
         kolom = st.columns(len(baris))
         for i, elemen in enumerate(baris):
             simbol = elemen.get("simbol", "")
             golongan = elemen.get("golongan", "lainnya")
+
             if simbol and (filter_golongan is None or golongan == filter_golongan):
                 Ar = Ar_tiap_unsur.get(simbol, "")
-                tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol
                 warna = warna_golongan.get(golongan, "#FFFFFF") if dengan_warna else "#FFFFFF"
+                tombol_id = f"{simbol}_{i}"
 
-                tombol_html = f"""
-                <button style="background-color:{warna};
-                               width:100%;
-                               height:40px;
-                               border:none;
-                               border-radius:6px;
-                               cursor:pointer;
-                               font-weight:bold;"
-                        title="{tooltip}">
-                    {simbol}
-                </button>
-                """
+                is_selected = simbol in st.session_state.selected_elements
+                border = "2px solid black" if is_selected else "1px solid #ccc"
 
-                with kolom[i]:
-                    klik = st.button(simbol, key=f"{simbol}_{i}", help=tooltip, use_container_width=True)
-                    if klik and simbol not in st.session_state.selected_elements:
-                        if len(st.session_state.selected_elements) < 2:
-                            st.session_state.selected_elements.append(simbol)
+                tombol_html = f'''
+                <form action="" method="post">
+                    <button name="clicked" value="{simbol}"
+                            style="
+                                background-color:{warna};
+                                border:{border};
+                                border-radius:6px;
+                                width:100%;
+                                height:40px;
+                                font-weight:bold;
+                                cursor:pointer;"
+                            title="{simbol} (Ar = {Ar})">
+                        {simbol}
+                    </button>
+                </form>
+                '''
+                kolom[i].markdown(tombol_html, unsafe_allow_html=True)
+            else:
+                kolom[i].markdown(" ")
+
+    if st.session_state.clicked:
+        simbol = st.session_state.clicked
+        if simbol not in st.session_state.selected_elements:
+            if len(st.session_state.selected_elements) < 2:
+                st.session_state.selected_elements.append(simbol)
+        st.session_state.clicked = None

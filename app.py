@@ -7,7 +7,7 @@ st.set_page_config(page_title="Penyusun Persamaan Reaksi Kimia", layout="wide")
 
 st.title("🧪 Penyusun Persamaan Reaksi Kimia")
 
-halaman = st.st.sidebar.markdown("### 📌 Navigasi")
+halaman = st.sidebar.markdown("### 📌 Navigasi")
 halaman = st.sidebar.radio("Pilih Halaman", ["📘 Dasar Teori", "🔬 Tabel Periodik"], label_visibility="collapsed")
 
 if "Dasar Teori" in halaman:

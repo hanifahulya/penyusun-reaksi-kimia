@@ -46,7 +46,10 @@ def tampilkan_tabel_periodik(filter_golongan="Semua", klik_unsur=None):
                     help=tooltip
                 )
                 if is_selected:
-                    kolom[posisi - 1].markdown(f"<div style='border:1px solid red; padding:4px; border-radius:5px; text-align:center'>{simbol}</div>", unsafe_allow_html=True)
+                    kolom[posisi - 1].markdown(
+                        f"<div style='border:1px solid red; padding:4px; border-radius:5px; text-align:center'>{simbol}</div>",
+                        unsafe_allow_html=True
+                    )
                 if tombol:
                     return simbol
             else:

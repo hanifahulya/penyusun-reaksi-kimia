@@ -2,18 +2,18 @@
 import streamlit as st
 from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
 
-warna_golongan = {
-    "logam alkali": "#FFA07A",
-    "logam alkali tanah": "#F0E68C",
-    "logam transisi": "#90EE90",
-    "logam pasca transisi": "#D8BFD8",
-    "metaloid": "#FFB6C1",
-    "nonlogam": "#87CEFA",
-    "halogen": "#FFDEAD",
-    "gas mulia": "#E0FFFF",
-    "lanthanida": "#E6E6FA",
-    "aktinida": "#FFE4E1",
-    "lainnya": "#FFFFFF"
+emoji_golongan = {
+    "logam alkali": "🟥",
+    "logam alkali tanah": "🟨",
+    "logam transisi": "🟩",
+    "logam pasca transisi": "🟪",
+    "metaloid": "🩷",
+    "nonlogam": "🟦",
+    "halogen": "🟧",
+    "gas mulia": "🟦",
+    "lanthanida": "⬜",
+    "aktinida": "⬛",
+    "lainnya": "⬜"
 }
 
 def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
@@ -28,17 +28,12 @@ def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
 
             if simbol and (filter_golongan is None or golongan == filter_golongan):
                 Ar = Ar_tiap_unsur.get(simbol, "")
-                warna = warna_golongan.get(golongan, "#FFFFFF") if dengan_warna else "#FFFFFF"
-                border = "2px solid black" if simbol in st.session_state.selected_elements else "1px solid #ccc"
+                warna_emoji = emoji_golongan.get(golongan, "⬜") if dengan_warna else ""
+                label = f"{warna_emoji} {simbol}"
 
-                with kolom[i]:
-                    with st.container():
-                        st.markdown(
-                            f"<div style='background-color:{warna}; border:{border}; border-radius:6px; text-align:center; padding:6px 0; font-weight:bold;'>{simbol}</div>",
-                            unsafe_allow_html=True
-                        )
-                        if st.button(" ", key=f"btn_{simbol}_{i}", help=f"{simbol} (Ar = {Ar})"):
-                            if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
-                                st.session_state.selected_elements.append(simbol)
+                if kolom[i].button(label, key=f"{simbol}_{i}", help=f"{simbol} (Ar = {Ar})", use_container_width=True):
+                    if simbol not in st.session_state.selected_elements:
+                        if len(st.session_state.selected_elements) < 2:
+                            st.session_state.selected_elements.append(simbol)
             else:
                 kolom[i].markdown(" ")

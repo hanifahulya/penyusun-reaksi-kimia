@@ -23,15 +23,26 @@ def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
             golongan = elemen.get("golongan", "lainnya")
             if simbol and (filter_golongan is None or golongan == filter_golongan):
                 Ar = Ar_tiap_unsur.get(simbol, "")
-                label = f"{simbol}"
                 tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol
-                warna = warna_golongan.get(golongan, "#FFFFFF") if dengan_warna else None
-                if kolom[i].button(label, help=tooltip, key=f"{simbol}_{i}", use_container_width=True):
+                warna = warna_golongan.get(golongan, "#FFFFFF") if dengan_warna else "#FFFFFF"
+
+                tombol_html = f"""
+                <button style="background-color:{warna};
+                               width:100%;
+                               height:40px;
+                               border:none;
+                               border-radius:6px;
+                               cursor:pointer;">
+                    <strong>{simbol}</strong>
+                </button>
+                """
+
+                if kolom[i].button(simbol, key=f"{simbol}_{i}", help=tooltip, use_container_width=True):
                     if "selected_elements" not in st.session_state:
                         st.session_state.selected_elements = []
                     if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
                         st.session_state.selected_elements.append(simbol)
-                # elif dengan_warna:
-                    # kolom[i].markdown(f"<div style='background-color:{warna}; width:100%; height:35px; border-radius:5px; text-align:center'>{simbol}</div>", unsafe_allow_html=True)
+                elif dengan_warna:
+                    kolom[i].markdown(tombol_html, unsafe_allow_html=True)
             else:
                 kolom[i].markdown(" ")

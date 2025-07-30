@@ -24,8 +24,8 @@ def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
             if simbol and (filter_golongan is None or golongan == filter_golongan):
                 Ar = Ar_tiap_unsur.get(simbol, "")
                 label = f"{simbol}"
-                tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol
                 warna = warna_golongan.get(golongan, "#FFFFFF") if dengan_warna else None
+                tooltip = f"""\nNama: {elemen.get('nama', '-')}\nGolongan: {elemen.get('golongan', '-')}\nStatus: {elemen.get('status', '-')}\nKegunaan: {elemen.get('deskripsi', '-')}"""
                 if kolom[i].button(label, help=tooltip, key=f"{simbol}_{i}", use_container_width=True):
                     if "selected_elements" not in st.session_state:
                         st.session_state.selected_elements = []

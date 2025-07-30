@@ -1,6 +1,6 @@
 import streamlit as st
 from periodic_table_ui import tampilkan_tabel_periodik
-from reaction_engine import susun_reaksi_dari_unsur
+from reaction_engine import susun_reaksi_dari_unsur, hitung_massa_molekul
 from utils.tabel_periodik_118 import Ar_tiap_unsur
 
 st.set_page_config(page_title="Penyusun Persamaan Reaksi Kimia", layout="wide")
@@ -49,11 +49,15 @@ elif halaman == "Tabel Periodik":
     if "selected_elements" in st.session_state and len(st.session_state.selected_elements) == 2:
         unsur1, unsur2 = st.session_state.selected_elements
         st.subheader(f"🔍 Hasil Reaksi: {unsur1} + {unsur2}")
-        hasil = proses_reaksi(unsur1, unsur2)
+        hasil = susun_reaksi_dari_unsur([unsur1, unsur2])
         if hasil:
-            st.success(f"**Reaksi:** {hasil['reaksi']}")
-            st.info(f"**Jenis Reaksi:** {hasil['jenis']}")
-            st.write(f"**Berat Molekul (BM):** {hasil['bm']} g/mol")
+            st.subheader("📄 Persamaan Reaksi:")
+        st.latex(hasil["setara"] if "setara" in hasil else hasil["setara_opsi"][0])
+        st.success(f"Jenis Reaksi: {hasil['jenis']}")
+        produk = hasil.get("produk", hasil.get("produk_opsional", ["?"])[0])
+        bm = hitung_massa_molekul(produk)
+        if bm:
+            st.info(f"Massa molekul relatif (Mr) dari {produk}: {round(bm, 2)}")
         else:
             st.warning("Tidak ditemukan reaksi yang cocok antara kedua unsur ini.")
         if st.button("🔁 Reset Pilihan"):

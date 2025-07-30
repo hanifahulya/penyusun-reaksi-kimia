@@ -7,9 +7,10 @@ st.set_page_config(page_title="Penyusun Persamaan Reaksi Kimia", layout="wide")
 
 st.title("🧪 Penyusun Persamaan Reaksi Kimia")
 
-halaman = st.sidebar.selectbox("Navigasi", ["Dasar Teori", "Tabel Periodik"])
+halaman = st.sidebar.markdown("### 📌 Navigasi")
+halaman = sidebar.radio("Pilih Halaman", ["📘 Dasar Teori", "🔬 Tabel Periodik"], label_visibility="collapsed")
 
-if halaman == "Dasar Teori":
+if "Dasar Teori" in halaman:
     st.header("📘 Dasar Teori")
     st.markdown("""
     Persamaan reaksi kimia merupakan representasi simbolik dari reaksi kimia dengan menyatakan reaktan dan produk yang terlibat. 
@@ -27,14 +28,12 @@ if halaman == "Dasar Teori":
     - Reaksi Pembakaran 🔥
     
     Aplikasi ini membantu menyusun reaksi antara dua unsur dan menampilkan:
-    - Persamaan reaksi setara ⚖️
+    - Persamaan reaksi setara
     - Jenis reaksi ⚗️
-    - Berat molekul (BM) dari senyawa hasil reaksi dalam satuan **g/mol** 
-
-    Silahkan pilih menu di sebelah kiri untuk memilih 2 unsur yang  ingin direaksikan dari tabel periodik
+    - Berat molekul (BM) dari senyawa hasil reaksi dalam satuan **g/mol** ⚖️
     """)
 
-elif halaman == "Tabel Periodik":
+elif "Tabel Periodik" in halaman:
     st.header("🔬 Tabel Periodik Unsur")
 
     gol_filter = st.selectbox("Filter Unsur berdasarkan Golongan", 

@@ -6,9 +6,8 @@ def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=True):
 
     selected_elements = st.session_state.get("selected_elements", [])
 
-    grid = [[None for _ in range(18)] for _ in range(10)]  # Baris x Kolom
+    grid = [[None for _ in range(18)] for _ in range(10)]
 
-    # Masukkan elemen ke grid sesuai posisinya
     for el in elemen_periodik:
         if filter_golongan and el['golongan'] != filter_golongan:
             continue

@@ -1,6 +1,6 @@
 import streamlit as st
 from periodic_table_ui import tampilkan_tabel_periodik
-from reaction_engine import susun_reaksi_dari_unsur
+from reaction_engine import proses_reaksi
 from utils.tabel_periodik_118 import Ar_tiap_unsur
 
 st.set_page_config(page_title="Penyusun Persamaan Reaksi Kimia", layout="wide")
@@ -16,16 +16,16 @@ if halaman == "Dasar Teori":
     Persamaan reaksi kimia menyatakan secara simbolik reaksi kimia dengan menggunakan rumus kimia dari zat-zat yang terlibat. Agar sah secara hukum kekekalan massa, persamaan ini harus setara, yaitu jumlah atom untuk setiap unsur harus sama di kedua sisi reaksi.
 
     ⚛️ **Contoh Persamaan Setara:**
-    \[ 2H_2 + O_2 \\rightarrow 2H_2O \]
+    \[ 2H_2 + O_2 \rightarrow 2H_2O \]
 
     Jenis reaksi kimia umum meliputi:
-    
+
     - Reaksi Kombinasi (Sintesis) 🧩
     - Reaksi Penguraian (Dekomposisi) ⚡
     - Reaksi Pergantian Tunggal 🔁
     - Reaksi Pergantian Ganda 🔄
     - Reaksi Pembakaran 🔥
-    
+
     Aplikasi ini membantu menyusun reaksi antara dua unsur dan menampilkan:
     - Persamaan reaksi setara
     - Jenis reaksi ⚗️
@@ -41,10 +41,9 @@ elif halaman == "Tabel Periodik":
                                        "gas mulia", "lanthanida", "aktinida"])
 
     tampilkan_tabel_periodik(
-    filter_golongan=gol_filter if gol_filter != "Semua" else None,
-    dengan_warna=True
+        filter_golongan=gol_filter if gol_filter != "Semua" else None,
+        dengan_warna=True
     )
-
 
     if "selected_elements" in st.session_state and len(st.session_state.selected_elements) == 2:
         unsur1, unsur2 = st.session_state.selected_elements

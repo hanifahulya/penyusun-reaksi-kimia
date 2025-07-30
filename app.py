@@ -44,7 +44,7 @@ elif halaman == "Tabel Periodik":
 
     tampilkan_tabel_periodik(
         elemen_periodik,
-        info_unsur=element_info,
+        
         elemen_terpilih=st.session_state.elemen_terpilih,
         callback=reset_elemen
     )

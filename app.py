@@ -41,9 +41,10 @@ elif halaman == "Tabel Periodik":
                                        "gas mulia", "lanthanida", "aktinida"])
 
     tampilkan_tabel_periodik(
-        filter_golongan=gol_filter if gol_filter != "Semua" else None,
-        dengan_warna=True
-    )
+    filter_golongan=gol_filter if gol_filter != "Semua" else None,
+    dengan_warna=True
+)
+
 
     if "selected_elements" in st.session_state and len(st.session_state.selected_elements) == 2:
         unsur1, unsur2 = st.session_state.selected_elements

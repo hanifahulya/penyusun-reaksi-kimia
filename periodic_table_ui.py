@@ -26,23 +26,27 @@ def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
                 tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol
                 warna = warna_golongan.get(golongan, "#FFFFFF") if dengan_warna else "#FFFFFF"
 
+                tombol_id = f"{simbol}_{i}"
+
                 tombol_html = f"""
                 <button style="background-color:{warna};
                                width:100%;
                                height:40px;
                                border:none;
                                border-radius:6px;
-                               cursor:pointer;">
-                    <strong>{simbol}</strong>
+                               cursor:pointer;
+                               font-weight:bold;"
+                        onClick="fetch('/_stcore/{tombol_id}')">
+                    {simbol}
                 </button>
                 """
 
-                if kolom[i].button(simbol, key=f"{simbol}_{i}", help=tooltip, use_container_width=True):
+                if kolom[i].button(simbol, key=tombol_id, help=tooltip, use_container_width=True):
                     if "selected_elements" not in st.session_state:
                         st.session_state.selected_elements = []
                     if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
                         st.session_state.selected_elements.append(simbol)
-                elif dengan_warna:
+                else:
                     kolom[i].markdown(tombol_html, unsafe_allow_html=True)
             else:
                 kolom[i].markdown(" ")

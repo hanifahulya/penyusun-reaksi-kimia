@@ -1,5 +1,6 @@
 
 import streamlit as st
+from streamlit.components.v1 import html
 from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
 
 warna_golongan = {
@@ -20,25 +21,43 @@ def tampilkan_tabel_periodik(filter_golongan=None, dengan_warna=False):
     if "selected_elements" not in st.session_state:
         st.session_state.selected_elements = []
 
+    html_content = """
+    <style>
+        .unsur-grid {
+            display: grid;
+            grid-template-columns: repeat(18, 1fr);
+            gap: 6px;
+        }
+        .unsur-button {
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #aaa;
+        }
+    </style>
+    <div class='unsur-grid'>"""
+
     for baris in elemen_periodik:
-        kolom = st.columns(len(baris))
-        for i, elemen in enumerate(baris):
+        for elemen in baris:
             simbol = elemen.get("simbol", "")
             golongan = elemen.get("golongan", "lainnya")
-
-            if simbol and (filter_golongan is None or golongan == filter_golongan):
-                Ar = Ar_tiap_unsur.get(simbol, "")
-                warna = warna_golongan.get(golongan, "#FFFFFF") if dengan_warna else "#FFFFFF"
-                border = "2px solid black" if simbol in st.session_state.selected_elements else "1px solid #ccc"
-
-                with kolom[i]:
-                    with st.container():
-                        st.markdown(
-                            f"<div style='background-color:{warna}; border:{border}; border-radius:6px; text-align:center; padding:6px 0; font-weight:bold;'>{simbol}</div>",
-                            unsafe_allow_html=True
-                        )
-                        if st.button(" ", key=f"btn_{simbol}_{i}", help=f"{simbol} (Ar = {Ar})"):
-                            if len(st.session_state.selected_elements) < 2 and simbol not in st.session_state.selected_elements:
-                                st.session_state.selected_elements.append(simbol)
+            if simbol:
+                if filter_golongan is None or golongan == filter_golongan:
+                    warna = warna_golongan.get(golongan, "#FFFFFF")
+                    html_content += f"""
+                    <div class='unsur-button' style='background-color:{warna}'
+                         onclick="window.parent.postMessage('{simbol}', '*')">
+                        {simbol}
+                    </div>"""
+                else:
+                    html_content += "<div></div>"
             else:
-                kolom[i].markdown(" ")
+                html_content += "<div></div>"
+
+    html_content += "</div>"
+
+    html(html_content, height=700)
+
+    # Tangkap pesan dari JS dan simpan ke session_state (dilakukan di app.py listener)
